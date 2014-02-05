@@ -9,6 +9,7 @@ fi
 
 export DYLD_LIBRARY_PATH=/usr/local/mysql/lib 
 export TERM="screen-256color"
+export set PATH=$PATH:~
 
 ESC="\e["
 PCOLOR="${ESC}1;154m"
