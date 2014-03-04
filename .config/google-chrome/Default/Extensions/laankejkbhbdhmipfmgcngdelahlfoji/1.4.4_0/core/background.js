@@ -1,1 +1,0 @@
-chrome.runtime.onInstalled.addListener(function(e){if(e.reason==="update"&&e.previousVersion){var t=localStorage.getItem("previousVersion");t!==e.previousVersion&&(chrome.tabs.create({url:chrome.extension.getURL("update.html")}),localStorage.setItem("previousVersion",e.previousVersion))}});

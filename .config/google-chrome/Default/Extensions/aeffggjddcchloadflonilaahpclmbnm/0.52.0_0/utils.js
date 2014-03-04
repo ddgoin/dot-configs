@@ -1,5 +1,0 @@
-function createTabStoreDataSet(tabId) {
-	return {
-		
-	};
-}
