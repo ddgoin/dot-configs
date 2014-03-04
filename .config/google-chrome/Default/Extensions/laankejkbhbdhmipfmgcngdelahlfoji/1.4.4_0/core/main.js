@@ -1,1 +1,0 @@
-requirejs.config({baseUrl:"/"}),requirejs(["core/Logger","core/StayFocusd","core/ActivityMonitor"],function(e,t,n){t.init(),n.initBackgroundScript()});

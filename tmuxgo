@@ -1,4 +1,4 @@
-le Bewley <dale @ guifreelife org> - Sat Feb 19 08:53:30 PST 2011
+#le Bewley <dale @ guifreelife org> - Sat Feb 19 08:53:30 PST 2011
 #-------------------------------------------------------------------------------
 # Use me to get your tmux session restored after a reboot or reattach daily.
 # Just type tmuxgo every morning and hit ^bd at the end of the day. Login
