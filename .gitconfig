@@ -1,0 +1,5 @@
+[user]
+	email = ddgoin@gmail.com
+	name = Drew Goin
+[credential]
+	helper = cache --timeout=7200
