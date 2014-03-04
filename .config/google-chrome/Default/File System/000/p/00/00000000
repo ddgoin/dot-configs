@@ -4,13 +4,13 @@ version=4
 [Subscription]
 url=https://easylist-downloads.adblockplus.org/exceptionrules.txt
 title=Allow non-intrusive advertising
-lastDownload=1393862317
+lastDownload=1393949560
 downloadStatus=synchronize_ok
-lastSuccess=1393862317
-lastCheck=1393905516
-expires=1394035117
-softExpiration=1393945814
-version=201403031551
+lastSuccess=1393949560
+lastCheck=1393949557
+expires=1394122360
+softExpiration=1394021687
+version=201403041611
 requiredVersion=2.0
 
 [Subscription filters]
@@ -4191,10 +4191,13 @@ comprano.de#@#.adsbygoogle
 @@||fls.doubleclick.net^$subdocument,image
 ! Webgains conversion tracking (https://adblockplus.org/forum/viewtopic.php?p=87949#p87949)
 @@||track.webgains.com^
-! intelliAd Conversion tracking
+! intelliAd Conversion tracking (https://adblockplus.org/forum/viewtopic.php?p=94094#p94094)
 @@||intelliad.de/impression.php?$image
 @@||intelliad.de/click.php?$image
 @@||intelliad.de/tc2.js?
+@@||intelliad.de/cl/*.js
+@@||intelliad.de/gcm.php?$image
+@@||doubleclick.net/pixel?google_nid=intelliad^$image
 @@||bidobserver.com^$third-party
 ! Linkconnector conversion tracking (https://adblockplus.org/forum/viewtopic.php?p=93029#p93029)
 @@||linkconnector.com/traffic_affiliate.php
@@ -4271,7 +4274,7 @@ homepage=https://easylist.adblockplus.org/
 lastDownload=1393737318
 downloadStatus=synchronize_ok
 lastSuccess=1393737318
-lastCheck=1393905516
+lastCheck=1393949557
 expires=1394428518
 softExpiration=1394104348
 version=201403020510
