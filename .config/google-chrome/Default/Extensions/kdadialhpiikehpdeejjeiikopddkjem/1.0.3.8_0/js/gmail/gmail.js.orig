@@ -1,0 +1,1056 @@
+(function($){
+
+var enabled = true,
+    tour = false,
+    getUrl = chrome.extension.getURL,
+    getMessage = chrome.i18n.getMessage,
+    f = $(document), // gmail used to run inside an iframe. If it returns, use $('#' + C.frameId).contents()
+    body = $('body', f),
+    button,
+    menu,
+    menuWidth,
+    menuHeight,
+    panel,
+    container,
+    $tour,
+    reminderDateTime,
+    alert,
+    inputTitle,
+    inputParent,
+    calendarFrame,
+    calendarUrl = getUrl('calendar.html'),
+    suggestionCalendarFrame,
+    EID = getMessage('@@extension_id'),
+    thisButton = '.anydo-button[data-eid='+EID+']',
+    thisMenu = '.anydo-menu[data-eid='+EID+']',
+    thisTour = '.anydo-tour[data-eid='+EID+']',
+    thisBar = '.anydo-anybar[data-eid='+EID+']';
+
+    /* ---------------------------------- */
+/* ---------------------------------- */
+
+/**
+ * author Remy Sharp
+ * url http://remysharp.com/2009/01/26/element-in-view-event-plugin/
+ */
+
+function getViewportHeight() {
+    var height = window.innerHeight; // Safari, Opera
+    var mode = document.compatMode;
+
+    if ( (mode || !$.support.boxModel) ) { // IE, Gecko
+        height = (mode == 'CSS1Compat') ?
+        document.documentElement.clientHeight : // Standards
+        document.body.clientHeight; // Quirks
+    }
+
+    return height;
+}
+
+// kick the event to pick up any elements already in view.
+// note however, this only works if the plugin is included after the elements are bound to 'inview'
+
+function waitForFirstVisible(elem, callback) {
+    var intervalId = setInterval(function () {
+        var vpH = getViewportHeight(),
+            scrolltop = (document.documentElement.scrollTop ?
+                document.documentElement.scrollTop :
+                document.body.scrollTop),
+            elems = [];
+
+        $(elem).each(function () {
+            var $el = $(this),
+                top = $el.offset().top,
+                height = $el.height(),
+                inview = $el.data('inview') || false;
+
+            if (scrolltop > (top + height) || scrolltop + vpH < top) {
+                if (inview) {
+                    $el.data('inview', false);
+                    //$el.trigger('inview', [ false ]);
+                }
+            } else if (scrolltop < (top + height)) {
+                if (!inview) {
+                    console.log(scrolltop, top, height, top + height);
+                    $el.data('inview', true);
+                    //$el.trigger('inview', [ true ]);
+                    clearInterval(intervalId);
+                    callback();
+                }
+            }
+        });
+    }, 750);
+}
+
+/* ---------------------------------- */
+/* ---------------------------------- */
+
+/* Prepare and inject style sheet ASAP */
+$('<link rel="stylesheet">').attr('href', getUrl('css/gmail.css?v=')+Math.random()).appendTo(body);
+$('<link rel="stylesheet">').attr('href', getUrl('css/pfdindisplaypro-inline.css')).appendTo(body);
+
+chrome.runtime.sendMessage({type: 'gmailInit'}, function(response) {
+    enabled = response.active;
+    tour = response.tour;
+});
+
+// some utils
+function showMessage(msg){
+    $(C.notificationText, f).html(msg);
+    $(C.notificationBar, f).css('visibility', 'visible');
+    setTimeout(hideMessage, 5000);
+}
+
+function hideMessage(){
+    $(C.notificationBar, f).css('visibility', 'hidden');
+}
+
+function track(){
+    chrome.runtime.sendMessage({
+        action: 'track',
+        track: arguments
+    });
+}
+
+function trackPageview(page){
+    chrome.runtime.sendMessage({
+        action: 'trackPageview',
+        track: page
+    });
+}
+
+function newLinesToMarkup(string){
+    return '<p>' + string.replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br>') + '</p>';
+}
+
+function startTour(){
+    $tour = $('<div data-eid="' + EID + '" class="'+ C.boxClasses +' anydo-tour">' +
+                '<h2>' + getMessage("gmail_tour_title") + '</h2>' + newLinesToMarkup(getMessage("gmail_tour")) +
+                '<footer></footer>' +
+                '</div>');
+    $tour.insertAfter(button);
+    var offset = getButtonOffset() + 2;
+    $tour.css('left', offset + 'px').show();
+    button.addClass('anydo-tour-on');
+    tour = false;
+}
+
+// Constants - gmail selectors
+// If something suddenly breaks, make sure to first check if gmail has changed any of these
+var C = {
+    frameId: 'canvas_frame',
+    toolbar: '.iH[gh=mtb]',
+    title: '.hP:visible',
+    from: '.gD',
+    buttonClasses: 'T-I J-J5-Ji ar7 nf T-I-ax7 L3',
+    buttonActive: 'T-I-Kq',
+    buttonHover: 'T-I-JW',
+    boxClasses: 'J-M jQjAxd',
+    menuItemHover: 'J-N-JT',
+    notificationBar: '.b8.UC',
+    notificationText: '.b8.UC .vh',
+    containerClasses: '.G-Ni.J-J5-Ji',
+    singleMessage: '.h7:visible', // the :visible is to get rid of left-overs when going to next message
+    lastMessage: '.h7.ie',
+    sender: '.gD', // looks like <span email="sen@der.com">Sen Der</span>
+    recipient: '.g2', // same as above, different class
+    datetime: '.g3',
+    messageText: '.ii.gt.adP.adO',
+    sidebarContainerSeparator: '.nH.Pj', // separator between ads and contact info
+    replyBox: '.gA.gt',
+    userEmail: '[aria-owns=gbd4]',
+    userName: '#gbmpn',
+	loading: '#loading'
+};
+
+// not jquery
+function getNodeText(el) {
+    // if a textNode, return the content
+    if (el.nodeType === 3) return el.textContent;
+    // <br> -> \n
+    if (el.nodeName == "BR") return '\n';
+    var contents = el.childNodes;
+    var texts = $.map(contents, getNodeText);
+
+    var display = getComputedStyle(el).display;
+    var endCharTable = {
+        'block':'\n', 
+        'inline-block':'\n',
+        'table-row':'\n',
+        'table-cell':'\t'
+    }; // default to empty-string
+    var endChar = endCharTable[display] || '';
+
+    return texts.join('') + endChar;
+}
+
+// message-id as string or null if not in a thread (e.g. looking at the inbox)
+function getCurrentMessageId() {
+    var loc = window.location.hash;
+    var re = /#.*\/([0-9a-f]{16})$/; // look for "#<don't care>/<16 hex digits>"
+    var result = re.exec(loc);
+
+    if (result) return result[1];
+    return null;
+}
+function getDateFromGmail(datestring)
+{
+    return Date.parse(datestring.replace('at ', ''));
+}
+
+function getThreadId()
+{
+    return Sha1.hash('' + $(C.datetime, f).attr('title') + '>:<' + getThreadDetails().originalTitle);
+}
+
+function getTasksFromMessages() {
+    // check if we're in a thread view - if we are then we will successfully get the message id
+    // from the view
+    if (null === getCurrentMessageId()) {
+        //console.log("no open messages in the current page");
+        return;
+    }
+
+    var visibleMessages = $(C.singleMessage, f);
+    var title = getThreadDetails().originalTitle;
+    var my_email = $(C.userEmail).text();
+    var parsedMessages = visibleMessages.map(function(index, elem) {
+
+        // get the DOM elements with the data
+        var sender = $(C.sender, elem);
+        var recipients = $(C.recipient, elem);
+        var date_elem = $(C.datetime, elem);
+        var text = $(C.messageText, elem);
+
+        // massive hack (thanks oren)
+        //var finalText = text.text();
+        var finalText = getNodeText(text[0]);
+        var separatorImage = $('img[src="images/cleardot.gif"]', text);
+        if (separatorImage.length > 0) {
+            var randstring = Sha1.hash(finalText);
+            var tempItem = $('<div style="display:none">' + randstring + '</div>');
+            separatorImage.after(tempItem);
+            var fullText = getNodeText(text[0]);//text.text(); // read the text with our separator
+            finalText = fullText.substr(0,fullText.search(randstring));
+            tempItem.remove();
+        }
+
+
+        // get the data
+        var recipientObjects = recipients.map(function (idx, elm) { 
+            var e = $(elm);
+            return {email: e.attr('email'), name: e.text()};
+        });
+
+        var email_addr = sender.attr('email');
+        if (email_addr.toLowerCase() === my_email.toLowerCase()) {
+            return null; // remove emails by the user from consideration
+        }
+
+        return  {
+                sender: {
+                        name: sender.text(),
+                        email: email_addr
+                        },
+                recipients: recipientObjects,
+                date: getDateFromGmail(date_elem.attr('title')),
+                subject: title,
+                body: finalText
+                }; //TODO
+    });
+
+    // unique Id for the conversation across time and space
+    var conversation_id = getThreadId();
+    var past_added_suggestions = JSON.parse(localStorage.getItem(conversation_id) || '{}');
+
+    // our object array.
+    var result = [];
+    for(var i = 0; i < parsedMessages.length; i++) {
+        var tasks = $.task_extractor.extract_tasks(parsedMessages[i])
+        //TODO: return more information (e.g. associate tasks with the specific message)
+        //result = result.concat(tasks);
+        for (var j = 0; j < tasks.length; j++) {
+        	var task = tasks[j][0];
+        	//var sentence = tasks[j][1];
+            if (!past_added_suggestions.hasOwnProperty(task)) {
+                result.push(tasks[j]);
+                $.post("http://afternoon-earth-1266.herokuapp.com/raw_email_analytics",
+                    {
+                        suggestion: tasks[j][0],
+                        original: tasks[j][1],
+                        conversation: conversation_id
+                    });
+            } else {
+                console.log(conversation_id + ' already seen: ' + tasks[j]);
+            }
+        }
+    }
+    result.conversation = conversation_id;
+
+    return result;
+}
+
+
+function buildSidebar(suggestions) {
+    var sidebar = "<div class='nH'><img class='f tk3N6e-I-J3' src='" + getUrl('images/logo_small.png') + "' style='vertical-align: middle;'/> <span class='anydo-button-text' style='vertical-align: middle;'>Suggested Tasks</span></div>\
+    <% items %>\
+    ";
+
+    var item = "<div class='nH'><input type='text' class='suggested-task' value='<% text %>'><a class='e suggestion-add' style='float:right' href='#' data-id='<% id %>'>+</a></div>";
+    var itemsMarkup = "";
+
+    $.each(suggestions, function(i, task) {
+        itemsMarkup += item
+                           .replace("<% text %>", task)
+                           .replace("<% id %>", i);
+    });
+
+    var url = document.location.href;
+    var elem = $(sidebar.replace("<% items %>", itemsMarkup));
+
+    //callbacks
+    elem.on('click', '.suggestion-add', function(ev) {
+        ev.preventDefault();
+        var originalSuggestion = suggestions[ $(this).data('id') ];
+        var currentSuggestion = $(this).prev('input').val();
+        console.log('add task. original: ' + originalSuggestion);
+        console.log('current: ' + currentSuggestion);
+
+        var conversation_id = getThreadId(); // title of the thread, list of added task strings
+        var past_added_suggestions = JSON.parse(localStorage.getItem(conversation_id) || '{}');
+        past_added_suggestions[currentSuggestion] = true;
+        localStorage.setItem(conversation_id, JSON.stringify(past_added_suggestions));
+
+        //TODO: send the original suggestion vs. what the user actually added
+
+        track('Gmail','Suggested Task Added');
+
+        addTask({
+            type: 'gmailAddTask',
+            data: {
+                title: currentSuggestion,
+                linkUrl: url,
+                originalSuggestion: originalSuggestion,
+                conversation: suggestions.conversation
+            },
+            dateCategory: 'DATE_CATEGORY_TODAY'
+        });
+    });
+    return elem;
+}
+
+function addAnybar(suggestions) {
+    var replyBox = $(C.replyBox, f).last(); // the selector is too general, last one is the reply box
+
+    // removed the 'ip' class for the div with class "ip iq" because gmail would inject its reply box into it
+    /*var actionBarMarkup = '<div class="gA gt ac5"><div class="gB"><div class="ip iq"><table class="cf FVrZGe"><tbody>\
+            <tr><td class="amq"><img id=":0_1" name=":0" src="'+getUrl('images/anydo-profile.png')+'" class="ajn bofPge"></td>\
+            <td class="amr"><b>Action Items:</b><input class="bar-input" type="text" value="<% text %>" placeholder="Task Description"><a href="#" class="suggestion-add">Add</a>\
+        </td></tr></tbody></table></div></div></div>';*/
+    var actionBarMarkup = '<div class="gA gt ac5 anydo-anybar" data-eid="' + EID + '"><div class="gB"><div class="iq"><table class="cf FVrZGe"><tbody>\
+            <tr><td class="amq"><img src="'+getUrl('images/anydo-profile.png')+'" class="ajn bofPge"></td>\
+            <td class="amr"><strong>What\'s Next?</strong><input class="bar-input" type="text" value="<% text %>" data-placeholder="<% followup_example %>" placeholder="<% followup_followUpPlaceholder %>">\
+            <div class="suggestion-controls">\
+                <span class="suggestion-container">\
+                <a href="#" class="suggestion-add suggestion-date-category category-today" data-category="TODAY">' + getMessage("x_date_today") + '</a>\
+                    <div class="reminder-choices-popup">\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="09:00:00">' + getMessage("x_9am") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="12:00:00">' + getMessage("x_12pm") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="20:00:00">' + getMessage("x_8pm") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder custom">' + getMessage('date_custom') + '</a>\
+                    </div>\
+                    <div class="reminder-choices-popup customReminderPicker">\
+                    <iframe class="calendarFrame"></iframe>\
+                    <a class="anydo-setCustomReminder suggestion-add" href="#">SET</a>\
+                    </div>\
+                </span>\
+                <span class="suggestion-container">\
+                <a href="#" class="suggestion-add suggestion-date-category" data-category="TOMORROW">' + getMessage("x_date_tomorrow") + '</a>\
+                    <div class="reminder-choices-popup">\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="09:00:00">' + getMessage("x_9am") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="12:00:00">' + getMessage("x_12pm") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="20:00:00">' + getMessage("x_8pm") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder custom">' + getMessage('x_date_custom') + '</a>\
+                    </div>\
+                </span>\
+                <span class="suggestion-container">\
+                <a href="#" class="suggestion-add suggestion-date-category" data-category="UPCOMING">' + getMessage("x_later") + '</a>\
+                    <div class="reminder-choices-popup">\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="7">' + getMessage("x_date_1_week") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="14">' + getMessage("x_date_2_weeks") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder" data-reminder="30">' + getMessage("x_date_1_month") + '</a>\
+                    <a href="#" class="suggestion-add suggestion-reminder custom">' + getMessage('x_date_custom') + '</a>\
+                    </div>\
+                </span>\
+            </div>\
+            </td></tr></tbody></table></div></div></div>';
+
+    var no_suggestions = false;
+    if (suggestions.length == 0) {
+        suggestions[0] = [""];
+        no_suggestions = true;
+    }
+
+    var suggestionIdx = 0; // current suggestion index
+    var url = document.location.href;
+
+    var thread = getThreadDetails();
+    var followUpText = thread.followUpName ? getMessage("x_followup_with", thread.followUpName) : getMessage("x_followup_on", thread.originalTitle);
+    var followUpPlaceholder = getMessage("x_followup_placeholder", followUpText);
+
+    var elem = $(actionBarMarkup
+        .replace("<% text %>", suggestions[suggestionIdx][0])
+        .replace("<% followup_example %>", followUpText)
+        .replace("<% followup_followUpPlaceholder %>", followUpPlaceholder));
+    replyBox.before(elem);
+
+    $(".bar-input", elem).css({
+                "border-style" : "solid",
+                "border-color" : "#ABADB3",
+                "border-width" : "1px"
+    });
+
+    waitForFirstVisible(replyBox, function() {
+        setTimeout( function() {
+            if (! no_suggestions)
+            {
+                var color = "251, 255, 161"
+                $(".bar-input", elem).animate({
+                    "background-color" : "rgba(" + color + ", 1.0)"
+                }, 300)
+                .animate({
+                    "background-color" : "rgba(" + color + ", 0.0)"
+                }, 300);
+            }
+        }, 100);
+    });
+
+    suggestionCalendarFrame = $('.customReminderPicker .calendarFrame', f);
+    suggestionCalendarFrame.attr('src', calendarUrl + '#inAnybar=true');
+
+    if(tour) startTour();
+
+    elem.on('click', '.suggestion-add', function(ev) {
+        ev.preventDefault();
+
+        var target = $(ev.target);
+        $(this).parents('.reminder-choices-popup').addClass('invisible');
+
+        var taskText = elem.find('.bar-input').val() || elem.find('.bar-input').data('placeholder');
+        var data = {
+            title: taskText,
+            linkUrl: url,
+            conversation: suggestions.conversation
+        };
+        console.log(suggestions, data);
+
+        // We have three possible click targets:
+        // - Date category (e.g. Today, no reminder)
+        // - Specific reminder (e.g. Tomorrow > 1pm)
+        // - Custom - Open calendar
+
+        var dateCategory = 'DATE_CATEGORY_TODAY';
+
+        if(target.data('category')) {
+            dateCategory = 'DATE_CATEGORY_' + target.data('category');
+        }
+
+        if(target.hasClass('suggestion-reminder')) {
+            var category = target.parents('.suggestion-container').children('.suggestion-date-category').data('category');
+            reminderDateTime = getDate[category]();
+            if(target.data('reminder')) {
+                prepareReminderDetails( target.data('reminder'), reminderDateTime );
+            }
+            //track('Gmail', item.text, $(ev.target).text()); // TODO: GA report
+            dateCategory = reminderDateTime;
+            data.alert = alert;
+        }
+
+        if(target.hasClass('custom')) {
+            console.log(target, target.parent() );
+            suggestionCalendarFrame.attr('src', calendarUrl.replace(/(#.+)?$/, '#'+reminderDateTime + '&inAnybar=true') );
+            $('.customReminderPicker', f).insertAfter( target.parent() ).addClass('visible');
+            return;
+        }
+
+        var fillText = "";
+        console.log('add task: ' + taskText);
+        // if this was a suggestion-based task
+        if (suggestionIdx < suggestions.length) {
+            var originalSuggestion = suggestions[ suggestionIdx ][0];
+            console.log('original suggestion: ' + originalSuggestion);
+
+            data.originalSuggestion = originalSuggestion; // add this to the data - we'll generate tracking info because of this
+
+            // add the suggestion to the duplicate list for this thread
+            var conversation_id = getThreadId(); // title of the thread, list of added task strings
+            var past_added_suggestions = JSON.parse(localStorage.getItem(conversation_id) || '{}');
+            past_added_suggestions[taskText] = true;
+            localStorage.setItem(conversation_id, JSON.stringify(past_added_suggestions));
+
+            suggestionIdx++;
+            if (suggestionIdx < suggestions.length) {
+                // default to next suggestion
+                fillText = suggestions[suggestionIdx][0];
+            }
+        }
+
+        elem.find('.bar-input').val(fillText);
+
+        track('Gmail','Actionbar Task Added');
+
+        if(target.hasClass('anydo-setCustomReminder')) {
+            dateCategory = reminderDateTime;
+            data.alert = alert;
+        }
+
+        console.log('adding task with details', data, dateCategory);
+        addTask({
+            type: 'gmailAddTask',
+            data: data,
+            dateCategory: dateCategory
+        });
+    });
+
+    // Add click-handler on the message: copy the visibility from the preceding element's style
+    var message = replyBox.parent().children().first();
+    var container = replyBox.parent();
+    container.on('click', function (ev) {
+        //TODO: some better solution that doesn't feel laggy
+        setTimeout(function() {
+            var isVis = message.is(':visible');
+            elem.toggle(isVis);
+        }, 300);
+    })
+}
+
+function addSidebar(html) {
+    // The DOM has two options:
+    // 1. there's already an info bar for a contact, so we place ourselves after it, before the ads.
+    // 2. There're only ads, in which case we will place ourselves before them in the container
+
+    //separator is a div that separates the adwords and user info divs (contact info div doesn't always exist)
+    var separator = $(C.sidebarContainerSeparator, f);
+    // container is the div containing the contact info 
+    var container = separator.prev();
+
+    if (!container.length) {
+        // nothing before the ads, create the container and add it before the ads
+        container = $("<div/>").addClass("nH");
+        separator.before(container);
+    }
+
+    container.last(
+             ).append( 
+                $("<div/>"
+                    ).addClass("anL"
+                    ).html(html
+                    ).after(
+                        $("<div/>").addClass("am6")
+                    )
+             );
+
+}
+
+//getting the email for show_original. unfinished.
+// WARNING: for what are presumably security reasons, the ajax request fails and logs you
+// out of your account (while opening a new tab to the same url would have worked)
+function getOriginalEmail() {
+    var loc = window.location.hash;
+    var last_slash = loc.lastIndexOf('/');
+    var message_id = loc.substr(last_slash + 1, loc.length - last_slash - 1);
+
+    //TODO:
+    //var re = /#.*\/([0-9a-f]{16})$/; // look for "#<don't care>/<16 hex digits>"
+    //var result = re.exec(loc);
+    //if (result) message_id = result[1]
+
+    // url for "show original" on the message
+    //GLOBALS[9] for getting the window's gmail id thingy (ik=<this variable> in the query string for show original)
+    var url = 'https://mail.google.com/mail/ca/u/0/?ui=2&ik=' + GLOBALS[9] + '&view=om&th=' + message_id;
+    //TODO: implement callback, parse rfc2822 email, etc.
+    console.log(url);
+    $.ajax(url, {success: function(data, status, jqXHR) {
+            console.log('Got email! success!');
+            console.log(data);
+        },
+        error: function(jqXHR, status, err) {
+            console.log('XHR error. Status: ' + status);
+            console.log(err);
+        }
+    });
+}
+
+// business logic
+function addTask(task){
+    chrome.runtime.sendMessage(task, function(response) {
+      console.log('got response', response);
+        if(response.success) {
+        showMessage(getMessage("task_added", ['<a href="javascript:;" class="anydo-open-popup ad SL7K4c" data-eid="'+EID+'" tabindex="0">Any.DO</a>']));
+      } else {
+            if(response.errorReason === 'loggedOut') {
+                showMessage(getMessage('error_must_login_first'));
+            }
+      }
+    });
+}
+
+function addReminder(thread, dateCategory){
+
+    addTask({
+        type: 'gmailAddTask',
+        data: {
+            title: thread.inputTitle,
+            linkUrl: thread.url,
+            alert: alert
+        },
+        dateCategory: dateCategory
+    });
+}
+
+// http://css-tricks.com/snippets/javascript/htmlentities-for-javascript/
+function htmlEntities(str) {
+    if(typeof str !== "string") return str;
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function getThreadDetails(){
+<<<<<<< HEAD
+    var thread = {
+=======
+	var thread = {
+>>>>>>> hotfix-servererrors
+        originalTitle: htmlEntities( $(C.title).text() ),
+        inputTitle: inputTitle ? htmlEntities( inputTitle.val() ) : null,
+        fromName: $(C.from) ? htmlEntities( $(C.from).attr('name').split(' ')[0] ) : null,
+        fromEmail: $(C.from) ? htmlEntities( $(C.from).attr('email') ) : null,
+        url: document.location.href
+    };
+
+    var senders = $(C.sender, f).map(function(i, el){
+        return $(el).attr('name')
+    }).filter(function(i, name){
+        return name !== $(C.userName, f).text();
+    });
+    var l = senders.length;
+
+    thread.followUpName = l ? senders[l - 1].split(' ')[0] : null;
+    thread.taskTitle = thread.originalTitle + ' (from ' + thread.fromName + ')';
+
+    return thread;
+}
+
+function addDays(days, date){
+    var date = date || new Date();
+    date.setSeconds(00);
+    date.setDate(date.getDate() + days);
+    date.setMinutes(parseInt(date.getMinutes() / 5) * 5);
+    return +date + '';
+}
+
+var getDate = {
+    TODAY: function(){
+        return addDays(0);
+    },
+    TOMORROW: function(){
+        return addDays(1);
+    },
+    UPCOMING: function(){
+        return addDays(2);
+    },
+    SOMEDAY: function(){
+        return addDays(8);
+    }
+}
+
+// menu items
+var items = [
+    {
+        text: getMessage('date_today'),
+        category: 'DATE_CATEGORY_TODAY',
+        reminderLinks: '<a href="#" data-reminder="09:00:00">' + getMessage('9am') + '</a> <a href="#" data-reminder="12:00:00">' + getMessage('12pm') + '</a> <a href="#" data-reminder="16:00:00">' + getMessage('4pm') + '</a> <a href="#" data-reminder="20:00:00">' + getMessage('8pm') + '</a> <a href="#" class="custom">' + getMessage('date_custom') + '</a>',
+        getDate: getDate.TODAY,
+        action: function(){
+            track('Gmail', 'Today');
+            addReminder( getThreadDetails(), 'DATE_CATEGORY_TODAY' );
+        }
+    },
+    {
+        text: getMessage('date_tomorrow'),
+        category: 'DATE_CATEGORY_TOMORROW',
+        reminderLinks: '<a href="#" data-reminder="09:00:00">' + getMessage('9am') + '</a> <a href="#" data-reminder="12:00:00">' + getMessage('12pm') + '</a> <a href="#" data-reminder="16:00:00">' + getMessage('4pm') + '</a> <a href="#" data-reminder="20:00:00">' + getMessage('8pm') + '</a> <a href="#" class="custom">' + getMessage('date_custom') + '</a>',
+        getDate: getDate.TOMORROW,
+        action: function(){
+            track('Gmail', 'Tomorrow');
+            addReminder( getThreadDetails(), 'DATE_CATEGORY_TOMORROW' );
+        }
+    },
+    {
+        text: getMessage('date_custom'),
+        classNames: 'anydo-custom',
+        category: 'DATE_CATEGORY_TODAY',
+        getDate: getDate.TODAY,
+        action: function(){
+            track('Gmail', 'Custom');
+        }
+    },
+    {
+        text: getMessage('date_someday'),
+        category: 'DATE_CATEGORY_SOMEDAY',
+        getDate: getDate.SOMEDAY,
+        action: function(){
+            track('Gmail', 'Someday');
+            addReminder( getThreadDetails(), 'DATE_CATEGORY_SOMEDAY' );
+        }
+    }
+];
+
+// Turns out when calling .position / offset on our button, jQuery throws an error
+// Until they fix the bug, I found a way to make it behave - Temporarily run over jQuery.isWindow to trick it to work, then switch it back.
+// Don't try this at home.
+function getButtonOffset(){
+    var _isWindow = $.isWindow, position;
+    $.isWindow = function(obj) { return true; };
+    position = button.position().left;
+    $.isWindow = _isWindow;
+    return position;
+}
+
+function addAnyDoButtonToMenu() {
+	// if gmail is still loading, it's not ready yet
+	if($(C.loading).is(':visible')) return;
+
+    // check for a jquery data attribute on a DOM element that appears once in a thread view,
+    // doesn't appear in the main view, and is _not_ recycled on 'next' or 'prev', but rather recreated.
+    // so add the button if this element doesn't have our special marking.
+    // The reason this is done is that when you add something to the DOM, it'll only show up
+    // on next render. When the system is stressed, you can sometimes have addAnyDoButtonToMenu()
+    // called more than once, before the added elements will appear in the DOM, so you end up with
+    // too many buttons and anybars. This is a work-around.
+	var message_marker = $(C.lastMessage, f);
+    if (message_marker.data("anydo_marker") !== undefined) {
+        console.log('found existing marker, exiting');
+	    return;
+    }
+    message_marker.data("anydo_marker","anydo");
+
+    var existingButton = $(thisButton+':visible', f);
+    var toolbar = $(C.toolbar, f); // this selector is supposed to catch the left toolbar
+    chrome.runtime.sendMessage({type: 'isGmailActive'}, function(switches) {
+        if(!switches.gmail) {
+            $(f).find(thisButton + ',' + thisMenu + ',' + thisTour).remove();
+        } else {
+            if (existingButton.length || !toolbar.length) return; // button already exists or no toolbar so no need
+
+            /* Button template */
+            var containers = toolbar.find(C.containerClasses);
+
+		    var buttonClasses = C.buttonClasses + ' anydo-button';
+		    var buttonTemplate = "<div data-eid='" + EID + "' class='" + buttonClasses +"' data-tooltip='"+ getMessage('add_this_thread') + "' style='padding-left: 16px; padding-right: 16px;'>\
+		                                <div aria-haspopup='true' style='-webkit-user-select: none; margin-bottom:0px;margin-top:-2px; outline: none;' role='button' class='J-J5-Ji W6eDmd L3 J-Zh-I J-J5-Ji Bq L3' tabindex='0'> \
+		                                    <img class='f tk3N6e-I-J3' src='" + getUrl('icons/anydo-gmail-local.png') + "' style='vertical-align: -3px; height: 13px;'/> <span class='anydo-button-text'>" + getMessage('remind_me') + "</span> <div class='G-asx T-I-J3 J-J5-Ji'>&nbsp;</div></div>\
+		                                </div>\
+		                           ";
+            /* Drop down template */
+            var menuClasses = C.boxClasses + ' anydo-menu'; // 320px
+            var menuTemplate = "<div data-eid='" + EID + "' class='" + menuClasses +"' style='display: none; position: absolute; min-width: 278px; -webkit-user-select: none; overflow: hidden;'>\
+                            <div class='menuInnerContainer' style='position: relative; left: 0;'>\
+                            <div class='SK AX' style='-webkit-user-select: none;'>\
+                                <h2>" + getMessage('add_to_my_anydo') + "</h2> \
+                                <span style='margin-left: 15px; color: #8e8e8e; font-size: 15px;'>" + getMessage('gmail_task_title_label') + "</span> <div class='J-M-JJ asg' style='border: none; display: inline-block; padding: 0; margin: 11px 0 17px; width: 80%; max-width: 225px;'> \
+                                    <input class='anydo-input-title' style='color: #000; font-style: italic; font-size: 14px; padding: 6px 7px; border: 1px solid #ddd; width: 92%;'> \
+                                </div> \
+                                <div class='J-Kh' style='-webkit-user-select: none; margin: -3px 4px 0; padding-top: 3px; border-top-color: #e1e1e1;'></div>\
+                                <% items %>\
+                            </div>\
+                            <div class='reminderPanel' style='display: none;'><iframe class='calendarFrame'></iframe>\
+                                <a class='anydo-back' href='#'>" + getMessage('back') + "</a>\
+                                <a class='anydo-setReminder' href='#'>" + getMessage('set') + "</a>\
+                            </div>\
+                            </div>\
+                        </div>";
+
+            button = $(buttonTemplate);
+            var menuItemTemplate = "<div class='J-N anydo-item <% classNames %>' role='menuitem' data-id='<% id %>' style='-webkit-user-select: none; <% css %>'><% text %><span class='remind'><% reminderLinks %></span></div>";
+            var itemsMarkup = '';
+            $.each(items, function(i, item){
+                itemsMarkup += menuItemTemplate
+                    .replace(/<% text %>/, item.text)
+                    .replace(/<% id %>/, i)
+                    .replace(/<% reminderLinks %>/, item.reminderLinks || '')
+                    .replace(/<% classNames %>/, (item.classNames || ''))
+                    .replace(/<% css %>/, (item.css || ''));
+            });
+            menuTemplate = menuTemplate.replace(/<% items %>/, itemsMarkup);
+            menu   = $(menuTemplate);
+
+            /* Inject new stuff to the DOM */
+            containers.filter(':last').append( button.add(menu) );
+
+            panel = $(thisMenu+' .reminderPanel', f);
+            container = $(thisMenu+' .menuInnerContainer', f);
+            calendarFrame = panel.find('.calendarFrame');
+            inputTitle = $(thisMenu+' .anydo-input-title', f);
+            inputParent = inputTitle.parent();
+
+            calendarFrame.attr('src', calendarUrl);
+
+
+            trackPageview('/gmail-thread');
+	        }
+
+	    if(switches.gmailNext) {
+		    var suggestedTasks = getTasksFromMessages();
+            addAnybar(suggestedTasks);
+
+            if (suggestedTasks.length == 0) {
+                console.log('no tasks detected!');
+                return;
+            }
+
+            //TODO: remove once anybar is functional
+            //var sidebar = buildSidebar(suggestedTasks);
+            //console.log(sidebar);
+            //addSidebar(sidebar);
+
+            //analytics
+            track('Gmail', 'Suggested', ''+suggestedTasks.length);
+        }
+    });
+}
+
+function closeTour(){
+    if(!$tour) return;
+    $tour.remove();
+    button.removeClass('anydo-tour-on');
+}
+function closeMenu(){
+    if(!menu) return;
+    button.removeClass(C.buttonActive);
+    menu.removeClass('open').hide();
+    resetMenu();
+}
+
+function openMenu(){
+    if(!menu) return;
+    button.addClass(C.buttonActive);
+    var thread = getThreadDetails();
+
+    inputTitle.val(thread.taskTitle);
+    var offset = getButtonOffset();
+    menu.addClass('open').css('left', offset + 'px').show();
+    inputTitle[0].selectionStart = inputTitle[0].selectionEnd = 0;
+    trackPageview('/gmail-menu');
+}
+
+function showReminderPanel(item){
+    panel.show();
+    reminderDateTime = item.category;
+    var timestamp = item.getDate();
+    calendarFrame.attr('src', calendarUrl.replace(/(#.+)?$/, '#'+timestamp) );
+
+    var panelWidth = panel.width();
+    var panelHeight = panel.height();
+    var panelOffset = panelWidth * -1 - 10;
+    menuWidth = menu.width();
+    menuHeight = menu.height();
+
+    menu
+        .css({
+            width: menuWidth,
+            height: menuHeight
+        }).animate({
+            width: panelWidth,
+            height: panelHeight
+    }, 100);
+
+    container.css('left', 0).animate({left: panelOffset}, 200);
+
+    chrome.runtime.sendMessage({
+        action: "trackPageview",
+        track: "/calendarWindow"
+    });
+}
+
+function resetMenu(){
+    menu.css({
+        width: menuWidth,
+        height: menuHeight
+    });
+    container.css('left', 0);
+    panel.hide();
+    reminderDateTime = null;
+    alert = {
+        type: "NONE"
+    };
+}
+
+function prepareReminderDetails(reminder, baseDate){
+    if(reminder.toString().indexOf(':') > -1) {
+        // colons mean an exact hour, let's set it
+        reminderDateTime = new Date(+baseDate);
+        reminderDateTime.setHours.apply(reminderDateTime, (reminder.split(':').map(parseFloat))); // this dance means take "17:00:00" and feed the integers into Date#setHours
+        reminderDateTime = +reminderDateTime;
+    } else {
+        // we're dealing with a relative offset, in days
+        var offset = +reminder * 1000 * 60 * 60 * 24;
+
+        // start with today at 9:00 AM
+        baseDate = new Date();
+        baseDate.setHours(9);
+        baseDate.setMinutes(0);
+        baseDate.setSeconds(0);
+
+        reminderDateTime = +baseDate + offset;
+    }
+    alert = {
+        customTime: 0,
+        offset: 0,
+        type: "OFFSET"
+    }
+}
+
+// hide reminder links for times in the past
+function hidePastReminders(links){
+    $(links).each(function(i, link){
+        link = $(link);
+        // compare reminder attribute with the current hour, e.g. "18:00:00" with 16
+        if(link.data('reminder').split(':')[0] <= new Date().getHours() ) {
+            link.addClass('pastTime');
+        } else {
+            link.removeClass('pastTime'); // good when popup is left open for a long time
+        }
+    });
+}
+
+function isMissingTitle(){
+    return $.trim(inputTitle.val()) == '';
+}
+
+function init(){
+    var $f = $(f);
+
+    $f.on('click', (thisButton + ',' + thisTour), function(ev){
+        ev.stopPropagation();
+        closeTour();
+
+        if(menu.is('.open')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+
+    });
+
+    // the following two handlers make sure clicking outside the menu/button closes it
+    $f.on('click', thisMenu + ', .customReminderPicker', function(ev){
+        ev.stopPropagation();
+    });
+
+    $f.on('click', function(ev){
+        closeMenu();
+        closeTour();
+        if($(ev.target).parents('.suggestion-controls').length == 0) $('.customReminderPicker', f).removeClass('visible');
+    });
+
+    // gmail uses extra classes instead of :hover. oh well
+    $f.on('hover', thisButton, function(){
+        $(this).toggleClass(C.buttonHover);
+    });
+    $f.on('hover', thisMenu+' [role=menuitem]', function(ev){
+        $(this).toggleClass(C.menuItemHover);
+    });
+
+    $f.on('mouseenter', thisMenu+' [role=menuitem]', function(){
+        if($(this).data('id') == 0) { // [data-id=0] is today
+            hidePastReminders( $(this).find('[data-reminder]') );
+        }
+    });
+
+    $f.on('mouseenter', '.suggestion-date-category', function(){
+        $(this).next('.reminder-choices-popup').removeClass('invisible');
+        if($(this).hasClass('category-today')) {
+            hidePastReminders( $(this).next().find('[data-reminder]') );
+        }
+    });
+
+    $f.on('click', '.anydo-open-popup[data-eid='+EID+']', function(){
+        chrome.runtime.sendMessage({action: "popupWindow"});
+    });
+
+    // hook actions to menu items
+    $f.on('click', thisMenu+' .anydo-item', function(ev){
+        var item = items[ $(this).data('id') ];
+        var func = item.action;
+
+        if(isMissingTitle()) {
+            inputTitle.focus().parent().addClass('invalid');
+            return;
+        }
+
+        if( $(ev.target).is('[data-reminder]') ) {
+            ev.stopPropagation();
+            ev.preventDefault();
+            var reminder = $(ev.target).attr('data-reminder');
+            prepareReminderDetails(reminder, item.getDate());
+            addReminder( getThreadDetails(), reminderDateTime );
+            track('Gmail', item.text, $(ev.target).text());
+            if(!item.keepMenuOpen) closeMenu();
+
+            return;
+        }
+
+        if( $(ev.target).hasClass('custom') ) {
+            track('Gmail', item.text, 'Custom');
+        }
+
+        if( $(ev.target).hasClass('anydo-custom') ) {
+            track('Gmail', 'Custom');
+        }
+
+        if( $(ev.target).hasClass('anydo-custom') || $(ev.target).hasClass('custom') ) {
+            showReminderPanel(item);
+        } else {
+            if(!item.keepMenuOpen) closeMenu();
+            if(typeof func === 'function') func.apply(this, arguments);
+        }
+    });
+
+    $f.on('keyup', thisMenu+' .anydo-input-title', function(){
+        if(isMissingTitle()) {
+            inputParent.addClass('invalid');
+        } else {
+            inputParent.removeClass('invalid');
+        }
+    });
+
+    setInterval(addAnyDoButtonToMenu, 300);
+    //setInterval(getTasksFromMessages, 500); //TODO: find a better way to call this after done loading
+
+    chrome.runtime.onMessage.addListener(function(msg) {
+        if(!msg) return;
+        if(msg.type == 'gmailCalendarPick') {
+            alert = msg.alert;
+            reminderDateTime = msg.dateTime;
+        }
+    });
+
+    $f.on('click', thisMenu+' .anydo-setReminder', function(ev){
+        ev.preventDefault();
+        addReminder( getThreadDetails(), reminderDateTime );
+        closeMenu();
+    });
+
+    $f.on('click', thisMenu+' .anydo-back', function(ev){
+        ev.preventDefault();
+        container.animate({left: 0}, 200);
+        menu.animate({
+            width: menuWidth,
+            height: menuHeight
+        }, 200);
+    });
+}
+
+init();
+
+})(jQuery);

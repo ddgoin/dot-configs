@@ -1,0 +1,1 @@
+define(function(){var e=function(){var e={OFF:0,ERROR:1,WARN:2,INFO:3,DEBUG:4,TRACE:5},t="OFF",n=function(e){t=e},r=function(e,t,n,r){n=n?n:"",r=r?r.toUpperCase():"INFO",t="["+e+"()] "+t,i(r)&&(r==="ERROR"?console.error(t,n):r==="WARN"?console.warn(t,n):r==="INFO"?console.info(t,n):console.log(t,n))},i=function(n){return e[n]<=e[t]};return{log:r,set:n}}();return e});

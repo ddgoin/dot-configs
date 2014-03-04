@@ -1,0 +1,30 @@
+<html>
+<head><title>YTshowRating Options</title></head>
+<script type="text/javascript">
+
+function save_options() {
+  var select = document.getElementById("ads");
+  console.log(ads.checked);
+   if (ads.checked == true)
+      localStorage["ads"] = '';
+   else
+      localStorage["ads"] = 'no';
+}
+
+function restore_options() {
+  var ads = localStorage["ads"];
+  if (ads == "no") {
+   console.log("unchecking");
+   document.getElementById("ads").checked = false;
+}
+}
+
+</script>
+
+<body onload="restore_options()">
+<h1>Settings for YTshowRating</h1>
+<input type='checkbox' id='ads' checked onclick="save_options()" />
+Support the developer of this extension with ads. This places non intrusive ads that help pay for the hosting and development time of this extension beside certain videos. It will never replace ads that are already there. I.e. it will not reduce income of YouTube or partnered content creators. This will never inject video pre-roll or pop-over ads.
+
+</body>
+</html>

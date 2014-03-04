@@ -1,0 +1,34 @@
+[Mail Submission]
+TransportUid=1356876819.2158.1@drew-Aspire-5750Z
+SentFolder=folder://local/Sent
+
+[Data Source]
+DisplayName=codehunter4@gmail.com
+Enabled=false
+Parent=1344453110.11149.21@drew-Aspire-5750Z
+
+[Mail Identity]
+Name=Drew
+Address=codehunter4@gmail.com
+SignatureUid=none
+
+Organization=
+ReplyTo=
+
+[Mail Composition]
+DraftsFolder=folder://local/Drafts
+SignImip=true
+
+Bcc=
+Cc=
+TemplatesFolder=
+
+[Pretty Good Privacy (OpenPGP)]
+AlwaysSign=false
+AlwaysTrust=false
+EncryptToSelf=true
+
+[Secure MIME (S/MIME)]
+EncryptByDefault=false
+EncryptToSelf=true
+SignByDefault=false

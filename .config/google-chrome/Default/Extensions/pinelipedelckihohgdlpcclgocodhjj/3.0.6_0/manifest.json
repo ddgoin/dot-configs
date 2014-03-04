@@ -1,0 +1,31 @@
+{
+   "background": {
+      "scripts": [ "background.js", "bg.js" ]
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "js": [ "js/jquery-1.7.2.min.js", "js/styles.js" ],
+      "matches": [ "http://*.4chan.org/*", "https://*.4chan.org/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "css": [ "css/4chanplus.css" ],
+      "js": [ "js/4chanplus.js" ],
+      "matches": [ "http://*.4chan.org/*", "https://*.4chan.org/*" ],
+      "run_at": "document_end"
+   } ],
+   "content_security_policy": "script-src 'self' https://connect.facebook.net/ https://apis.google.com/; object-src 'self'",
+   "description": "The best way to browse 4chan.",
+   "icons": {
+      "128": "icon-128.png",
+      "48": "icon-48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDALxhAA5mHckX58lzKM1GHxAWqxfGHxyMH/nNhDBAOuJPmJctuEfnPiKYASd85FlYk8SHWLPP1yTQx9X4YlUm4HRIN3ORprLOpkkUZod8r35YdZmaceztEDj5QWiCP91oqvfv2WTAI4Z7g7pWQsOv5gt6l5xU6M7VC3WVOJUrIHQIDAQAB",
+   "manifest_version": 2,
+   "name": "4chan Plus",
+   "options_page": "options.html",
+   "permissions": [ "http://*.4chan.org/*", "https://*.4chan.org/*" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "3.0.6",
+   "web_accessible_resources": [ "img/loader.gif", "img/404.png", "img/report.png", "img/x.png", "img/quickrep.png", "icon-48.png", "img/min.png", "img/expand.png", "img/refresh.png", "img/bookmarks.png", "img/star.png", "img/play.png", "img/awwyeah.png", "img/close.png" ]
+}

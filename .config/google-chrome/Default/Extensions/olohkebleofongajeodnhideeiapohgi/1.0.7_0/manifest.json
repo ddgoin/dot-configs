@@ -1,0 +1,21 @@
+{
+   "background": {
+      "scripts": [ "global.js" ]
+   },
+   "content_scripts": [ {
+      "js": [ "ytfix.js" ],
+      "matches": [ "*://youtube.com/*", "*://www.youtube.com/*" ],
+      "run_at": "document_end"
+   } ],
+   "description": "This modifies YouTube to allow you to see the rating of related videos before you click on them.",
+   "icons": {
+      "128": "Icon.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCpJrY8QfqQ1C4xvL5TcZ+rs7zWzQHBjMzONi3m9OXR8ZO/5qVxWBYLcbpx1JhCjoRO4n/vvAopv1xWYpgKSJ7bLE3bZYVqOrhyZ/z3w58NWo3o4j0Kp1cHMLWpEc/ozHSJSOVqE0Mme5DcMd54Lvb8fwqvSpO9BmTg+GoSQBx0EwIDAQAB",
+   "manifest_version": 2,
+   "name": "YTshowRating",
+   "options_page": "options.html",
+   "permissions": [ "*://gdata.youtube.com/" ],
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "1.0.7"
+}

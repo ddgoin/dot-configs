@@ -1,0 +1,1158 @@
+{
+  "data": {
+    "lobbyday": {
+      "aa_id": 76, 
+      "allowed_service_id": 1, 
+      "checksum": null, 
+      "documents": [
+        {
+          "content_type": "text/pdf", 
+          "filename": "Test3.pdf", 
+          "id": 3, 
+          "lobbyday_id": 51, 
+          "url": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/documents/whymb.2010.07.23a.pdf"
+        }
+      ], 
+      "end_date": null, 
+      "id": 51, 
+      "name": "ASLA Lobby Day", 
+      "organization": "American Society of Landscape Architects", 
+      "schedule_disabled": false, 
+      "search_tags": [
+        {
+          "id": 6, 
+          "lobbyday_id": 51, 
+          "tag": "#advocacy"
+        }, 
+        {
+          "id": 7, 
+          "lobbyday_id": 51, 
+          "tag": "@advocacyassoc"
+        }
+      ], 
+      "start_date": null, 
+      "talking_points": [
+        {
+          "id": 1, 
+          "lobbyday_id": 51, 
+          "talking_point": "Seeing eye cats are better than seeing eye dogs because reasons"
+        }, 
+        {
+          "id": 2, 
+          "lobbyday_id": 51, 
+          "talking_point": "Seeing eye cats can purr and dogs cannot"
+        }, 
+        {
+          "id": 3, 
+          "lobbyday_id": 51, 
+          "talking_point": "We will give you a yacht if you vote for our bill"
+        }
+      ], 
+      "twitter_hashtag": "#advocacy"
+    }, 
+    "meetings": [
+      {
+        "aa_id": 10609, 
+        "address": "455 Dirksen Senate Office Building, Washington, DC", 
+        "congresscritter_id": 15930, 
+        "end_time": null, 
+        "id": 1, 
+        "legislator": {
+          "bio": "Lamar Alexander represents Tennesseans with a conservative voice in the U.S. Senate. In its most recent evaluation, the National Rifle Association (NRA) gave Lamar an A rating. The U.S. Chamber of Commerce and the National Federation of Independent Business (NFIB) both gave his record a 100% for his pro-business votes. Similarly, the National Right to Life Committee gave his voting record a 100% ...rating for his efforts to protect life. \r\rLamar Alexander, was born in Maryville, the son of a kindergarten teacher and an elementary school principal. He is a seventh generation Tennessean.\r\rHe is the only Tennessean ever popularly elected both governor and U.S. Senator. He has been U.S. Education Secretary and University of Tennessee president. He chaired the National Governors' Association and President Reagan's Commission on Americans Outdoors. \r\rWhen elected to the U.S. Senate in 2002, Alexander had spent more adult years in the private sector than in public life. In 1972, he co-founded a Nashville law firm. In 1987, he and his wife and three others including Bob Keeshan, television's Captain Kangaroo, founded Corporate Child Care, Inc. The company became publicly traded in 1997 (NASDAQ) and later merged with Bright Horizons, Inc. creating the world's largest provider of worksite daycare. \r\rThree times his colleagues elected Sen. Alexander Chairman of the Senate Republican Conference. He is the ranking senate Republican overseeing education, labor and health as well as energy appropriations. \r\rIn his campaign for governor, Lamar Alexander walked 1,000 miles across Tennessee in his now famous red and black plaid shirt. Once elected, he helped Tennessee become the third largest auto producer, the state with the top-rated four lane highway system and the first state to pay teachers more for teaching well. He started Tennessee's Governor's Schools for outstanding students. When he left the governor's office, the state had a AAA bond rating, fewer employees and no long-term highway debt. \r\rHe is a classical and country pianist and the author of seven books, including Six Months Off, the story of his family's life in Australia after he was governor.\r\rLamar Alexander and Honey Buhler were married in 1969. They have four children and six grandchildren. He is a Presbyterian elder.", 
+          "birthday": "1940-07-03", 
+          "district": "TN", 
+          "district_number": "", 
+          "enddate": "2015-01-03", 
+          "firstname": "Lamar", 
+          "full_name": "Sen. Lamar Alexander (R-TN)", 
+          "gender": "M", 
+          "govtrack_id": 300002, 
+          "id": 15930, 
+          "image_url": "http://bioguide.congress.gov/bioguide/photo/A/A000360.jpg", 
+          "knowwho_person_id": 211704, 
+          "lastname": "Alexander", 
+          "media": [
+            {
+              "id": 1322, 
+              "media_handler": "web", 
+              "post_date": null, 
+              "source": "", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Website for Sen. Lamar Alexander [R, TN]", 
+              "url": "http://www.alexander.senate.gov"
+            }, 
+            {
+              "id": 1323, 
+              "media_handler": "rss", 
+              "post_date": null, 
+              "source": "YouTube", 
+              "subscribable": true, 
+              "summary": "", 
+              "title": "RSS Youtube Channel for Sen. Lamar Alexander [R, TN]", 
+              "url": "http://gdata.youtube.com/feeds/base/users/lamaralexander/uploads?alt=rss"
+            }, 
+            {
+              "id": 1324, 
+              "media_handler": "video", 
+              "post_date": null, 
+              "source": "Youtube", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Youtube Channel for Sen. Lamar Alexander [R, TN]", 
+              "url": "http://youtube.com/lamaralexander"
+            }, 
+            {
+              "id": 1326, 
+              "media_handler": "twitter", 
+              "post_date": null, 
+              "source": "Twitter", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Twitter for Sen. Lamar Alexander [R, TN]", 
+              "url": "http://twitter.com/senalexander"
+            }, 
+            {
+              "id": 31211, 
+              "media_handler": "facebook", 
+              "post_date": null, 
+              "source": "Facebook", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Facebook for Lamar Alexander", 
+              "url": "http://facebook.com/senatorlamaralexander"
+            }
+          ], 
+          "middlename": null, 
+          "party": "Republican Party", 
+          "party_id": 2, 
+          "phones": [
+            {
+              "comment": "Lamar Alexander", 
+              "id": 11296, 
+              "number": "202-224-4944", 
+              "type": "phone"
+            }
+          ], 
+          "religion": "Presbyterian", 
+          "startdate": "2009-01-06", 
+          "state": "TN", 
+          "sunlight_id": "0", 
+          "type": "sen"
+        }, 
+        "lobby_day_id": 51, 
+        "location": "455 Dirksen Senate Office Building", 
+        "meeting_with": "Curtis Swager or Daniel Hale", 
+        "start_time": null, 
+        "users": [
+          {
+            "about": null, 
+            "firstname": "Caron", 
+            "id": 190, 
+            "lastname": "Beard", 
+            "picture": null
+          }, 
+          {
+            "about": null, 
+            "firstname": "Henry", 
+            "id": 276, 
+            "lastname": "Minor", 
+            "picture": null
+          }, 
+          {
+            "about": "About me", 
+            "firstname": "Chris", 
+            "id": 1, 
+            "lastname": "Brown test", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/chrisbrown_picture"
+          }, 
+          {
+            "about": "Magical Experiences!", 
+            "firstname": "Young", 
+            "id": 2, 
+            "lastname": "Oh", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/young_picture"
+          }, 
+          {
+            "about": "Born in Houston, TX", 
+            "firstname": "Minh", 
+            "id": 3, 
+            "lastname": "Truong", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/minh_picture_20140105T183521.jpg"
+          }, 
+          {
+            "about": "last used the api test!", 
+            "firstname": "Drew1", 
+            "id": 4, 
+            "lastname": "Goin2", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/drew_IMG_75652685920797.jpeg"
+          }, 
+          {
+            "about": "", 
+            "firstname": "Boyd", 
+            "id": 5, 
+            "lastname": "Hitt", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Kaytee", 
+            "id": 6, 
+            "lastname": "Lozier", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Stephanie", 
+            "id": 7, 
+            "lastname": "Vance", 
+            "picture": ""
+          }, 
+          {
+            "about": "Apple Test Account", 
+            "firstname": "Jonny", 
+            "id": 187, 
+            "lastname": "Appleseed", 
+            "picture": null
+          }
+        ]
+      }, 
+      {
+        "aa_id": 10527, 
+        "address": "511 Hart Senate Office Building, Washington, DC", 
+        "congresscritter_id": 15782, 
+        "end_time": "2014-10-11 10:30:00", 
+        "id": 4, 
+        "legislator": {
+          "bio": "Throughout his career, Max has never forgotten where he came from or who he represents. Raised on a ranch near Helena, Max understands the values of hard work, faith, family, and community. That's why he does \"Work Days\" as often as he can with local businesses in Montana.  Max spends a full day working alongside Montanans to gain a better perspective of the challenges they face. Over the years, he's done Work Days on farms and ranches, at butcher shops and pharmacies, schools and construction sites.\r\rIn 1995 and 1996, Max walked the entire 820-mile length of Montana. An avid runner, Max completed a 50-mile running marathon in just over 12 hours in 2003.\r\rBoosting the state's economy and creating good-paying jobs in Montana top Max's priority list. By combining his trademark work ethic with independence and experience, Max has helped create thousands of good-paying jobs in Montana. He's held five separate statewide Montana Economic Development Summits, each of which attracted more than 1,000 people. These meetings, amongst the state's top economic development officials and business people, helped lay the foundation for economic development planning in the state.\r\rWhether fighting to expand the Children's Health Insurance Program or writing landmark health care reform legislation that is  working to reduce the deficit and provide quality, affordable health care coverage for all Americans, Max is leading the charge to improve choice and competition and make health care work better for Montanans . For decades he has led efforts to cut the rising number of the uninsured in Montana and to strengthen Medicare for Montana seniors.\r\rBy traveling overseas and hosting foreign dignitaries in Montana, Max has helped knock down trade barriers and open foreign markets to Montana's high-quality products. He's led Montana agriculture and business leaders on trade missions to Asia, Cuba, Australia and most recently South America.\r\rMax is also committed to boosting Montana's education system and fighting to increase access to public lands important to hunting and fishing.\r\rMax graduated from Helena High School in 1959. He earned both a Bachelor of Arts degree and a law degree from Stanford University. He has one son, Zeno. In what little free time Max has, he enjoys hunting, fishing and hiking on the public lands he fights so hard to keep open.", 
+          "birthday": "1941-12-11", 
+          "district": "MT", 
+          "district_number": "", 
+          "enddate": "2015-01-03", 
+          "firstname": "Max", 
+          "full_name": "Sen. Max Baucus (D-MT)", 
+          "gender": "M", 
+          "govtrack_id": 300005, 
+          "id": 15782, 
+          "image_url": "http://bioguide.congress.gov/bioguide/photo/B/B000243.jpg", 
+          "knowwho_person_id": 165243, 
+          "lastname": "Baucus", 
+          "media": [
+            {
+              "id": 741, 
+              "media_handler": "web", 
+              "post_date": null, 
+              "source": "", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Website for Sen. Max Baucus [D, MT]", 
+              "url": "http://www.baucus.senate.gov"
+            }
+          ], 
+          "middlename": "S.", 
+          "party": "Democratic Party", 
+          "party_id": 1, 
+          "phones": [
+            {
+              "comment": "Max Baucus", 
+              "id": 10834, 
+              "number": "202-224-2651", 
+              "type": "phone"
+            }
+          ], 
+          "religion": "United Church of Christ", 
+          "startdate": "2009-01-06", 
+          "state": "MT", 
+          "sunlight_id": "0", 
+          "type": "sen"
+        }, 
+        "lobby_day_id": 51, 
+        "location": "511 Hart Senate Office Building", 
+        "meeting_with": "Mark Hybner", 
+        "start_time": "2014-10-11 10:15:00", 
+        "users": [
+          {
+            "about": null, 
+            "firstname": "Jolene", 
+            "id": 290, 
+            "lastname": "Rieck", 
+            "picture": null
+          }, 
+          {
+            "about": "About me", 
+            "firstname": "Chris", 
+            "id": 1, 
+            "lastname": "Brown test", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/chrisbrown_picture"
+          }, 
+          {
+            "about": "Magical Experiences!", 
+            "firstname": "Young", 
+            "id": 2, 
+            "lastname": "Oh", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/young_picture"
+          }, 
+          {
+            "about": "Born in Houston, TX", 
+            "firstname": "Minh", 
+            "id": 3, 
+            "lastname": "Truong", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/minh_picture_20140105T183521.jpg"
+          }, 
+          {
+            "about": "last used the api test!", 
+            "firstname": "Drew1", 
+            "id": 4, 
+            "lastname": "Goin2", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/drew_IMG_75652685920797.jpeg"
+          }, 
+          {
+            "about": "", 
+            "firstname": "Boyd", 
+            "id": 5, 
+            "lastname": "Hitt", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Kaytee", 
+            "id": 6, 
+            "lastname": "Lozier", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Stephanie", 
+            "id": 7, 
+            "lastname": "Vance", 
+            "picture": ""
+          }, 
+          {
+            "about": "Apple Test Account", 
+            "firstname": "Jonny", 
+            "id": 187, 
+            "lastname": "Appleseed", 
+            "picture": null
+          }
+        ]
+      }, 
+      {
+        "aa_id": 10511, 
+        "address": "458 Russell Senate Office Building, Washington, DC", 
+        "congresscritter_id": 16048, 
+        "end_time": "2014-10-11 14:15:00", 
+        "id": 6, 
+        "legislator": {
+          "bio": "Michael F. Bennet was elected United States Senator for Colorado in November 2010. A newcomer to politics with experience in business and public service, he is widely-recognized as a pragmatic, innovative and independent thinker driven by a deep-seated obligation to create more opportunity for the next generation.\r\rBefore his appointment to the Senate in 2009 and subsequent election to a full six year term in 2010, Michael served as Superintendent of Denver Public Schools where he led a bold and inclusive reform effort that improved student achievement, helped turn around failing schools, and brought a halt to a seemingly endless cycle of annual budget cuts.\r\rPrior to his time at the Denver Public Schools, Michael was widely credited with balancing a historic budget deficit and implementing innovative reforms as Chief of Staff to then-Denver Mayor John Hickenlooper. In that role, he also implemented innovative reforms that made city government more responsive to the needs and concerns of the greater Denver community.\r\rMichael's experience saving jobs and turning around failing companies has also served him well in the U.S. Senate. As Managing Director at the Anschutz Investment Company, Michael managed the successful restructuring of more than $3 billion in corporate debt.\r\rMichael earned his bachelor's degree with honors from Wesleyan University and his law degree from Yale Law School, where he was Editor-in-Chief of The Yale Law Journal.\r\rMichael married Susan Daggett, a successful natural resources lawyer, in 1997. Michael and Susan are the proud parents of three daughters- Caroline, Halina and Anne.\r\rSince arriving in Washington, Michael hasn't wasted a moment. In his unrelenting fight to create good-paying jobs for Coloradans and restore fiscal responsibility to Washington, Michael has emerged as an effective leader with a proven record of bringing people together to deliver results for working families.\r\rA former businessman, Michael has led the fight in Washington to create jobs, support middle-class families and grow our economy. A champion for small business, Michael led the fight in the Senate to pass a bill that boosted small business investments and provided more than $12 billion in targeted tax relief for Colorado job creators.\r\rAs the father of three young girls, Michael has made reducing the deficits and debt that threaten our economic future a top priority. He has successfully fought to end the big bank bailouts, introduced a bill to rein in spending and ensure Congress lives within its means, and led a bipartisan group of 64 senators calling for a comprehensive plan for deficit reduction.\r\rAs a former school superintendent and a member of the Senate Education Committee, Michael is pushing for bold reforms that support great teaching, cut needless red tape and bureaucracy, and incentivize innovative efforts at the state and local level that drive student achievement and help prepare our kids to compete in the new economy.\r\rAs Colorado's U.S. Senator, Michael has pushed for investments in clean energy that create jobs and help break our reliance on overseas oil; fought to uphold our commitment to Colorado's veterans and military families; and fought to preserve Colorado's rich agricultural tradition underpinned by our family farmers and ranchers.\r\rMichael is a member of the Senate committees on Finance; Agriculture, Nutrition and Forestry; and Health, Education, Labor and Pensions.", 
+          "birthday": "1964-11-28", 
+          "district": "CO", 
+          "district_number": "", 
+          "enddate": "2017-01-03", 
+          "firstname": "Michael", 
+          "full_name": "Sen. Michael Bennet (D-CO)", 
+          "gender": "M", 
+          "govtrack_id": 412330, 
+          "id": 16048, 
+          "image_url": "http://bioguide.congress.gov/bioguide/photo/B/B001267.jpg", 
+          "knowwho_person_id": 274906, 
+          "lastname": "Bennet", 
+          "media": [
+            {
+              "id": 1820, 
+              "media_handler": "web", 
+              "post_date": null, 
+              "source": "", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Website for Sen. Michael F. Bennet [D, CO]", 
+              "url": "http://www.bennet.senate.gov"
+            }, 
+            {
+              "id": 1823, 
+              "media_handler": "facebook", 
+              "post_date": null, 
+              "source": "Facebook", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Facebook for Sen. Michael F. Bennet [D, CO]", 
+              "url": "http://facebook.com/senatorbennet"
+            }, 
+            {
+              "id": 1824, 
+              "media_handler": "twitter", 
+              "post_date": null, 
+              "source": "Twitter", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Twitter for Sen. Michael F. Bennet [D, CO]", 
+              "url": "http://twitter.com/SenBennetCo"
+            }, 
+            {
+              "id": 18191, 
+              "media_handler": "rss", 
+              "post_date": null, 
+              "source": "YouTube", 
+              "subscribable": true, 
+              "summary": "", 
+              "title": "RSS Youtube Channel for Michael F. Bennet", 
+              "url": "http://gdata.youtube.com/feeds/base/users/SenatorBennet/uploads?alt=rss"
+            }, 
+            {
+              "id": 18192, 
+              "media_handler": "video", 
+              "post_date": null, 
+              "source": "Youtube", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Youtube Channel for Michael F. Bennet", 
+              "url": "http://youtube.com/SenatorBennet"
+            }
+          ], 
+          "middlename": "F.", 
+          "party": "Democratic Party", 
+          "party_id": 1, 
+          "phones": [
+            {
+              "comment": "Michael Bennet", 
+              "id": 11678, 
+              "number": "202-224-5852", 
+              "type": "phone"
+            }
+          ], 
+          "religion": null, 
+          "startdate": "2011-01-05", 
+          "state": "CO", 
+          "sunlight_id": "0", 
+          "type": "sen"
+        }, 
+        "lobby_day_id": 51, 
+        "location": "458 Russell Senate Office Building", 
+        "meeting_with": "Laura Pence", 
+        "start_time": "2014-10-11 14:15:00", 
+        "users": [
+          {
+            "about": null, 
+            "firstname": "Craig", 
+            "id": 209, 
+            "lastname": "Coronato", 
+            "picture": null
+          }, 
+          {
+            "about": null, 
+            "firstname": "Mark", 
+            "id": 313, 
+            "lastname": "Tabor", 
+            "picture": null
+          }, 
+          {
+            "about": null, 
+            "firstname": "Robb", 
+            "id": 194, 
+            "lastname": "Berg", 
+            "picture": null
+          }, 
+          {
+            "about": null, 
+            "firstname": "Abraham", 
+            "id": 273, 
+            "lastname": "Medina", 
+            "picture": null
+          }, 
+          {
+            "about": "About me", 
+            "firstname": "Chris", 
+            "id": 1, 
+            "lastname": "Brown test", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/chrisbrown_picture"
+          }, 
+          {
+            "about": "Magical Experiences!", 
+            "firstname": "Young", 
+            "id": 2, 
+            "lastname": "Oh", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/young_picture"
+          }, 
+          {
+            "about": "Born in Houston, TX", 
+            "firstname": "Minh", 
+            "id": 3, 
+            "lastname": "Truong", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/minh_picture_20140105T183521.jpg"
+          }, 
+          {
+            "about": "last used the api test!", 
+            "firstname": "Drew1", 
+            "id": 4, 
+            "lastname": "Goin2", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/drew_IMG_75652685920797.jpeg"
+          }, 
+          {
+            "about": "", 
+            "firstname": "Boyd", 
+            "id": 5, 
+            "lastname": "Hitt", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Kaytee", 
+            "id": 6, 
+            "lastname": "Lozier", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Stephanie", 
+            "id": 7, 
+            "lastname": "Vance", 
+            "picture": ""
+          }, 
+          {
+            "about": "Apple Test Account", 
+            "firstname": "Jonny", 
+            "id": 187, 
+            "lastname": "Appleseed", 
+            "picture": null
+          }
+        ]
+      }, 
+      {
+        "aa_id": 10630, 
+        "address": "717 Hart Senate Office Building, Washington, DC", 
+        "congresscritter_id": 15753, 
+        "end_time": "2014-10-14 11:15:00", 
+        "id": 3, 
+        "legislator": {
+          "bio": "Tammy Baldwin was elected to the U.S. Senate on November 6, 2012, winning a hard fought race against former Wisconsin Governor Tommy Thompson. She is Wisconsin's first woman to serve in the U.S. Senate and is the first openly gay member elected to the Senate.\r\rBorn in Wisconsin and raised by her grandparents, Tammy graduated from Madison West High School and went on to double-major in political science and mathematics at Smith College. In 1989, she earned her law degree from University of Wisconsin. In 1986, while in law school, she served on the Madison Common Council, filling an aldermanic vacancy.  Tammy was also elected to the first of four terms (1986-1994) on the Dane County Board of Supervisors.  In 1992, Tammy was elected to the Wisconsin State Assembly as a State Representative for the 78th District, serving three terms.\r\rIn 1998, Wisconsin's 2nd Congressional District shattered the state's glass ceiling and elected Tammy Baldwin as the state's first female member of Congress and the nation's first openly gay challenger sent to Congress. She served seven terms in the House of Representatives, serving on Budget Committee, the Judiciary Committee, and the Energy and Commerce Committee.\r\rShortly after Tammy was first elected to Congress, she voted against letting Wall Street and the big banks write their own rules - one of only a handful of members of Congress who voted no on repealing the Glass-Steagall Act.  A champion of middle class economic security, Tammy helped craft the landmark Patient Protection and Affordable Care Act and led the effort to include the provision that now allows young people to remain on their parents' insurance plans up to age 26.  She was the lead sponsor of the Buffett Rule to ensure tax fairness and fought for student loan reforms to make higher education for accessible and affordable. She has strong record of fighting against unfair trade deals and has worked across party lines with Republicans to impose strong tariffs on China to protect Wisconsin's paper manufacturing jobs.  And Tammy has a strong record of working hard for Wisconsin's veterans - making sure their service and sacrifice is honored by ensuring adequate funding for veterans' health, education, and job-training programs. \r\rThroughout Tammy's career in public service she has always fought for fairness, equality and opportunity because she believes that with each passing year and each generation, our country must become more equal - not less. In Congress she has been a strong advocate on the issue of bullying and suicide among LGBT youth, and helped lead efforts on hate crimes legislation, marriage equality, \"Don't Ask Don't Tell,\" and the Employee Non Discrimination Act.\r\rIn the 113th Congress, Baldwin serves on the U.S. Senate Committee on Health, Education, Labor and Pensions (HELP), the Senate Budget Committee, the U.S. Committee on Homeland Security and Governmental Affairs, and the U.S. Senate Energy and Natural Resources Committee. She also serves on the U.S. Senate Special Committee on Aging.\r\rIn the U.S. Senate, a top priority of Tammy's is working to build a \"Made in Wisconsin\" economy by investing in research and science; innovation and technology; and education and job readiness for advanced manufacturing. Tammy is committed to working across party lines to strengthen the essential pillars of economic security for the middle class- affordable higher education, quality health care, a strong manufacturing economy, and retirement security for today's seniors and future generations.", 
+          "birthday": "1962-02-11", 
+          "district": "WI", 
+          "district_number": "", 
+          "enddate": "2019-01-03", 
+          "firstname": "Tammy", 
+          "full_name": "Sen. Tammy Baldwin (D-WI)", 
+          "gender": "F", 
+          "govtrack_id": 400013, 
+          "id": 15753, 
+          "image_url": "http://bioguide.congress.gov/bioguide/photo/B/B001230.jpg", 
+          "knowwho_person_id": 159127, 
+          "lastname": "Baldwin", 
+          "media": [
+            {
+              "id": 635, 
+              "media_handler": "web", 
+              "post_date": null, 
+              "source": "", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Website for Sen. Tammy Baldwin [D, WI]", 
+              "url": "http://www.baldwin.senate.gov"
+            }, 
+            {
+              "id": 636, 
+              "media_handler": "facebook", 
+              "post_date": null, 
+              "source": "Facebook", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Facebook for Sen. Tammy Baldwin [D, WI]", 
+              "url": "http://facebook.com/TammyBaldwin"
+            }, 
+            {
+              "id": 31170, 
+              "media_handler": "rss", 
+              "post_date": null, 
+              "source": "YouTube", 
+              "subscribable": true, 
+              "summary": "", 
+              "title": "RSS Youtube Channel for Tammy Baldwin", 
+              "url": "http://gdata.youtube.com/feeds/base/users/witammybaldwin/uploads?alt=rss"
+            }, 
+            {
+              "id": 31171, 
+              "media_handler": "video", 
+              "post_date": null, 
+              "source": "Youtube", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Youtube Channel for Tammy Baldwin", 
+              "url": "http://youtube.com/witammybaldwin"
+            }
+          ], 
+          "middlename": null, 
+          "party": "Democratic Party", 
+          "party_id": 1, 
+          "phones": [
+            {
+              "comment": "Tammy Baldwin", 
+              "id": 10715, 
+              "number": "202-224-5653", 
+              "type": "phone"
+            }
+          ], 
+          "religion": null, 
+          "startdate": "2013-01-03", 
+          "state": "WI", 
+          "sunlight_id": "0", 
+          "type": "sen"
+        }, 
+        "lobby_day_id": 51, 
+        "location": "Courtyard 1 Russell Senate Office Building", 
+        "meeting_with": "Meghan Ladwig", 
+        "start_time": "2014-10-14 11:00:00", 
+        "users": [
+          {
+            "about": null, 
+            "firstname": "Jay", 
+            "id": 226, 
+            "lastname": "Gehler", 
+            "picture": null
+          }, 
+          {
+            "about": null, 
+            "firstname": "christa", 
+            "id": 329, 
+            "lastname": "wollenzien", 
+            "picture": null
+          }, 
+          {
+            "about": null, 
+            "firstname": "Pamela", 
+            "id": 268, 
+            "lastname": "Linn", 
+            "picture": null
+          }, 
+          {
+            "about": null, 
+            "firstname": "Shawn", 
+            "id": 250, 
+            "lastname": "Kelly", 
+            "picture": null
+          }, 
+          {
+            "about": "About me", 
+            "firstname": "Chris", 
+            "id": 1, 
+            "lastname": "Brown test", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/chrisbrown_picture"
+          }, 
+          {
+            "about": "Magical Experiences!", 
+            "firstname": "Young", 
+            "id": 2, 
+            "lastname": "Oh", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/young_picture"
+          }, 
+          {
+            "about": "Born in Houston, TX", 
+            "firstname": "Minh", 
+            "id": 3, 
+            "lastname": "Truong", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/minh_picture_20140105T183521.jpg"
+          }, 
+          {
+            "about": "last used the api test!", 
+            "firstname": "Drew1", 
+            "id": 4, 
+            "lastname": "Goin2", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/drew_IMG_75652685920797.jpeg"
+          }, 
+          {
+            "about": "", 
+            "firstname": "Boyd", 
+            "id": 5, 
+            "lastname": "Hitt", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Kaytee", 
+            "id": 6, 
+            "lastname": "Lozier", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Stephanie", 
+            "id": 7, 
+            "lastname": "Vance", 
+            "picture": ""
+          }, 
+          {
+            "about": "Apple Test Account", 
+            "firstname": "Jonny", 
+            "id": 187, 
+            "lastname": "Appleseed", 
+            "picture": null
+          }
+        ]
+      }, 
+      {
+        "aa_id": 10564, 
+        "address": "144 Russell Senate Office Building, Washington, DC", 
+        "congresscritter_id": 15989, 
+        "end_time": "2014-10-25 09:00:00", 
+        "id": 2, 
+        "legislator": {
+          "bio": "Kelly Ayotte is a New Hampshire native who has devoted her life to public service - first as a long-time prosecutor and now in the United States Senate.\r\rIn her first bid for public office, she was elected to the Senate in 2010 with 60 percent of the vote. Kelly currently serves on the Armed Services, Budget, Commerce, Homeland Security and Governmental Affairs, and Aging Committees. She is the Ranking Member - top Republican - on the Armed Services Subcommittee on Readiness and the Commerce Subcommittee on Aviation Operations.\r\rKelly's top priority is to get America's fiscal house in order. She has stood on principle to vote against bloated budget bills that have included money for programs we don't need and can't afford. She is a staunch advocate for common sense budget reforms, including a permanent ban on earmarks, a Balanced Budget Amendment, and strict spending caps.\r\rAs a member of the Armed Services Committee, Kelly has quickly established herself as a leading voice in Congress on national security issues. She has written legislation with senior members of both parties to create workable terrorist detention policies that keep Americans safe. And as part of her strong commitment to reducing wasteful spending, Kelly has led efforts in the Senate to save over $1 billion in the Pentagon's budget - successfully passing legislation to stop the Defense Department from spending money on unnecessary programs.\r\rIn her capacity as Ranking Member of the Armed Services Subcommittee on Readiness, Kelly is well-positioned to highlight the national security value of the Portsmouth Naval Shipyard and the Pease Air National Guard Base. The panel's oversight responsibilities include military readiness, military construction, base realignment and closure, and industrial operations - including shipyards.\r\rComing from a small business family, Kelly understands that decisions made in Washington have serious consequences for New Hampshire's small business economy. Having helped her husband launch a family landscaping and snow removal company, she knows that high taxes and burdensome federal regulations discourage investment and job creation. In the Senate, Kelly is a strong voice for lower taxes and a simplified tax code. She also supports legislation to eliminate burdensome federal requirements that tie up small business owners with unnecessary red tape.\r\rA prosecutor at heart, Kelly served as the chief of the state's Homicide Unit and Deputy Attorney General before being named in 2004 as New Hampshire's first female Attorney General. First appointed to that position by a Republican governor, she was twice reappointed by a Democratic governor. During her time as Attorney General, she successfully led efforts to secure the first capital murder convictions in New Hampshire in over 60 years - for which the Union Leader newspaper named Kelly \"Citizen of the Year\" in 2008.\r\rKelly attended public schools in Nashua, where she was born. She graduated with honors in 1990 from Pennsylvania State University and earned a Juris Doctor degree in 1993 from the Villanova University School of Law.\r\rShe is married to Joe Daley, a Nashua native who flew combat missions during the Iraq war. He retired from the Air National Guard as a Lieutenant Colonel.\r\rKelly and Joe live in Nashua with their two young children, Katherine and Jacob.", 
+          "birthday": "1968-06-27", 
+          "district": "NH", 
+          "district_number": "", 
+          "enddate": "2017-01-03", 
+          "firstname": "Kelly", 
+          "full_name": "Sen. Kelly Ayotte (R-NH)", 
+          "gender": "F", 
+          "govtrack_id": 412493, 
+          "id": 15989, 
+          "image_url": "http://bioguide.congress.gov/bioguide/photo/A/A000368.jpg", 
+          "knowwho_person_id": 244487, 
+          "lastname": "Ayotte", 
+          "media": [
+            {
+              "id": 1570, 
+              "media_handler": "web", 
+              "post_date": null, 
+              "source": "", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Website for Sen. Kelly Ayotte [R, NH]", 
+              "url": "http://www.ayotte.senate.gov"
+            }, 
+            {
+              "id": 18150, 
+              "media_handler": "rss", 
+              "post_date": null, 
+              "source": "YouTube", 
+              "subscribable": true, 
+              "summary": "", 
+              "title": "RSS Youtube Channel for Kelly Ayotte", 
+              "url": "http://gdata.youtube.com/feeds/base/users/SenatorAyotte/uploads?alt=rss"
+            }, 
+            {
+              "id": 18151, 
+              "media_handler": "video", 
+              "post_date": null, 
+              "source": "Youtube", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Youtube Channel for Kelly Ayotte", 
+              "url": "http://youtube.com/SenatorAyotte"
+            }, 
+            {
+              "id": 31225, 
+              "media_handler": "facebook", 
+              "post_date": null, 
+              "source": "Facebook", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Facebook for Kelly Ayotte", 
+              "url": "http://facebook.com/kellyayottenh"
+            }
+          ], 
+          "middlename": null, 
+          "party": "Republican Party", 
+          "party_id": 2, 
+          "phones": [
+            {
+              "comment": "Kelly Ayotte", 
+              "id": 11483, 
+              "number": "202-224-3324", 
+              "type": "phone"
+            }
+          ], 
+          "religion": null, 
+          "startdate": "2011-01-05", 
+          "state": "NH", 
+          "sunlight_id": "0", 
+          "type": "sen"
+        }, 
+        "lobby_day_id": 51, 
+        "location": "Constituent Coffee event, details under Shaheen meeting.", 
+        "meeting_with": "Sen. Kelly Ayotte", 
+        "start_time": "2014-10-25 08:00:00", 
+        "users": [
+          {
+            "about": null, 
+            "firstname": "Susanne", 
+            "id": 305, 
+            "lastname": "Smith Meyer", 
+            "picture": null
+          }, 
+          {
+            "about": null, 
+            "firstname": "Anne", 
+            "id": 210, 
+            "lastname": "Cruess", 
+            "picture": null
+          }, 
+          {
+            "about": "About me", 
+            "firstname": "Chris", 
+            "id": 1, 
+            "lastname": "Brown test", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/chrisbrown_picture"
+          }, 
+          {
+            "about": "Magical Experiences!", 
+            "firstname": "Young", 
+            "id": 2, 
+            "lastname": "Oh", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/young_picture"
+          }, 
+          {
+            "about": "Born in Houston, TX", 
+            "firstname": "Minh", 
+            "id": 3, 
+            "lastname": "Truong", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/minh_picture_20140105T183521.jpg"
+          }, 
+          {
+            "about": "last used the api test!", 
+            "firstname": "Drew1", 
+            "id": 4, 
+            "lastname": "Goin2", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/drew_IMG_75652685920797.jpeg"
+          }, 
+          {
+            "about": "", 
+            "firstname": "Boyd", 
+            "id": 5, 
+            "lastname": "Hitt", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Kaytee", 
+            "id": 6, 
+            "lastname": "Lozier", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Stephanie", 
+            "id": 7, 
+            "lastname": "Vance", 
+            "picture": ""
+          }, 
+          {
+            "about": "Apple Test Account", 
+            "firstname": "Jonny", 
+            "id": 187, 
+            "lastname": "Appleseed", 
+            "picture": null
+          }
+        ]
+      }, 
+      {
+        "aa_id": 10634, 
+        "address": "111 Russell Senate Office Building, Washington, DC", 
+        "congresscritter_id": 16024, 
+        "end_time": "2014-10-25 10:10:00", 
+        "id": 5, 
+        "legislator": {
+          "bio": "Senator Mark Begich is in his fifth year representing Alaska in the U.S. Senate, where his primary focus is building a strong Alaska economy.\r\rAlready in his short time in the Senate, Senator Begich has risen to key positions for Alaska. He was recently named to the powerful Senate Appropriations Committee, where he will have a hands-on role in needed spending cuts while ensuring Alaska's interests are not forgotten. He was also named to the Senate Indian Affairs Committee for the 113th Congress, which is another key posting with jurisdiction over the intersection between the federal government and America's indigenous people. Alaska priorities like subsistence rights, full funding of the Indian Health Service and reimbursement for contract support costs will be key priorities.\r\rSenator Begich remains on the Veterans Affairs, Homeland Security,and Commerce committees as well as retaining chairmanship of the Commerce Committee's Subcommittee on Oceans, Atmosphere, Fisheries and Coast Guard. The Oceans Subcommittee has broad jurisdiction over important Alaska issues, including responsible development of the Arctic. Begich was also appointed as chairman of the Subcommittee on Emergency Management and Intergovernmental Affairs where he will have unique authority to oversee disaster relief, response, recovery, and preparation. \r\rSenator Begich was elected to the Senate in 2008 after serving as mayor of Anchorage for nearly six years. Born and raised in Anchorage, Senator Begich's other priorities include reducing the national deficit, tax reform, and building a national energy policy that emphasizes Alaska's oil and gas resources, an Alaska natural gas pipeline and the state's many renewable resources.\r\rA lifetime member of the NRA, Senator Begich is a strong advocate for the 2nd Amendment and the rights of Alaskans and all Americans to keep and bear arms.\r\rA businessman since age 14, Senator Begich is bringing his business acumen to the work in the Senate. His extensive experience in public office, along with service to dozens of non-profits and community groups, all add to his know-how and ability to get things done.\r\rIn 1988, at age 26, Mark was the youngest person ever elected to the Anchorage Assembly where he served for nearly 10 years. During that time, his colleagues three times elected him chairman, Anchorage's second highest political office, and he also served as chair of the budget committee. During his time as mayor, Anchorage went through the biggest building boom in a generation, attracting millions of dollars worth of public and private investment. Through Begich's leadership, Anchorage voters supported the building of the new Dena'ina Civic and Convention Center, a $100 million expansion of the Anchorage Museum of History and Art, and a multitude of other projects that strengthened the city's economy. In October 2008, both the Wall Street Journal and Business Week recognized Anchorage as a city well positioned to weather the international economic crisis and the city's bond ratings were upgraded due to improved fiscal stability.\r\rMark's parents, Pegge and the late Nick Begich, came to the territory of Alaska in 1957 as teachers. Following a career as a teacher and superintendent of military schools on Ft. Richardson, Nick was elected Alaska's third U.S. Congressman. While running for reelection, in 1972, Begich's airplane disappeared in the Gulf of Alaska when Mark was 10 years old.\r\rFrom his parents, Mark learned the values of hard work, strength of family, and commitment to community which are the values he has applied to a successful business career and long record of public service.\r\rSenator Begich is married to Deborah Bonito, a successful businesswoman. They have a young son, Jacob. The Begich family enjoys spending time together reading, traveling, and enjoying the many great things Alaska has to offer.", 
+          "birthday": "1962-03-30", 
+          "district": "AK", 
+          "district_number": "", 
+          "enddate": "2015-01-03", 
+          "firstname": "Mark", 
+          "full_name": "Sen. Mark Begich (D-AK)", 
+          "gender": "M", 
+          "govtrack_id": 412326, 
+          "id": 16024, 
+          "image_url": "http://bioguide.congress.gov/bioguide/photo/B/B001265.jpg", 
+          "knowwho_person_id": 266711, 
+          "lastname": "Begich", 
+          "media": [
+            {
+              "id": 1711, 
+              "media_handler": "web", 
+              "post_date": null, 
+              "source": "", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Website for Sen. Mark Begich [D, AK]", 
+              "url": "http://www.begich.senate.gov"
+            }, 
+            {
+              "id": 1714, 
+              "media_handler": "facebook", 
+              "post_date": null, 
+              "source": "Facebook", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Facebook for Sen. Mark Begich [D, AK]", 
+              "url": "http://facebook.com/Begich"
+            }, 
+            {
+              "id": 1715, 
+              "media_handler": "twitter", 
+              "post_date": null, 
+              "source": "Twitter", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Twitter for Sen. Mark Begich [D, AK]", 
+              "url": "http://twitter.com/SenatorBegich"
+            }, 
+            {
+              "id": 18174, 
+              "media_handler": "rss", 
+              "post_date": null, 
+              "source": "YouTube", 
+              "subscribable": true, 
+              "summary": "", 
+              "title": "RSS Youtube Channel for Mark Begich", 
+              "url": "http://gdata.youtube.com/feeds/base/users/USSenatorMarkBegich/uploads?alt=rss"
+            }, 
+            {
+              "id": 18175, 
+              "media_handler": "video", 
+              "post_date": null, 
+              "source": "Youtube", 
+              "subscribable": false, 
+              "summary": "", 
+              "title": "Youtube Channel for Mark Begich", 
+              "url": "http://youtube.com/USSenatorMarkBegich"
+            }
+          ], 
+          "middlename": null, 
+          "party": "Democratic Party", 
+          "party_id": 1, 
+          "phones": [
+            {
+              "comment": "Mark Begich", 
+              "id": 11597, 
+              "number": "202-224-3004", 
+              "type": "phone"
+            }
+          ], 
+          "religion": null, 
+          "startdate": "2009-01-06", 
+          "state": "AK", 
+          "sunlight_id": "0", 
+          "type": "sen"
+        }, 
+        "lobby_day_id": 51, 
+        "location": "Constituent Coffee event in 111 Russell Senate Office Building / You will also meet with Michael Johnson at 9:30 am right after the coffee", 
+        "meeting_with": "Sen. Mark Begich", 
+        "start_time": "2014-10-25 08:30:00", 
+        "users": [
+          {
+            "about": null, 
+            "firstname": "Tamas", 
+            "id": 218, 
+            "lastname": "Deak", 
+            "picture": null
+          }, 
+          {
+            "about": "About me", 
+            "firstname": "Chris", 
+            "id": 1, 
+            "lastname": "Brown test", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/chrisbrown_picture"
+          }, 
+          {
+            "about": "Magical Experiences!", 
+            "firstname": "Young", 
+            "id": 2, 
+            "lastname": "Oh", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/young_picture"
+          }, 
+          {
+            "about": "Born in Houston, TX", 
+            "firstname": "Minh", 
+            "id": 3, 
+            "lastname": "Truong", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/minh_picture_20140105T183521.jpg"
+          }, 
+          {
+            "about": "last used the api test!", 
+            "firstname": "Drew1", 
+            "id": 4, 
+            "lastname": "Goin2", 
+            "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/drew_IMG_75652685920797.jpeg"
+          }, 
+          {
+            "about": "", 
+            "firstname": "Boyd", 
+            "id": 5, 
+            "lastname": "Hitt", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Kaytee", 
+            "id": 6, 
+            "lastname": "Lozier", 
+            "picture": ""
+          }, 
+          {
+            "about": "", 
+            "firstname": "Stephanie", 
+            "id": 7, 
+            "lastname": "Vance", 
+            "picture": ""
+          }, 
+          {
+            "about": "Apple Test Account", 
+            "firstname": "Jonny", 
+            "id": 187, 
+            "lastname": "Appleseed", 
+            "picture": null
+          }
+        ]
+      }
+    ]
+  }, 
+  "debug": [], 
+  "error": null, 
+  "login": {
+    "aa_id": 4, 
+    "about": "last used the api test!", 
+    "devices": [
+      {
+        "active": 119, 
+        "auth_token": "10d5c86827c7484181b87dc9c49b7072", 
+        "created": null, 
+        "device_id": "idontwanttodothisagain", 
+        "device_name": null, 
+        "device_type": "ios", 
+        "id": 4, 
+        "push_token": null, 
+        "updated": "2014-02-28 18:12:46", 
+        "user_id": 4
+      }, 
+      {
+        "active": 287, 
+        "auth_token": "1260d228c1114e0599fcc175e7d68b1b", 
+        "created": null, 
+        "device_id": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36", 
+        "device_name": null, 
+        "device_type": "web", 
+        "id": 66, 
+        "push_token": null, 
+        "updated": "2014-02-10 19:17:11", 
+        "user_id": 4
+      }, 
+      {
+        "active": 311, 
+        "auth_token": "39e02c30b75d4e27b8fcb63ac0f8c2c0", 
+        "created": "2014-02-03 16:31:43", 
+        "device_id": "89f21229e4d22280", 
+        "device_name": null, 
+        "device_type": "android", 
+        "id": 312, 
+        "push_token": "d8bfa41e-0831-441f-bb38-9df5b5ff4ece", 
+        "updated": "2014-03-03 17:06:09", 
+        "user_id": 4
+      }, 
+      {
+        "active": null, 
+        "auth_token": "ae7fb3a984f64bf19f2746dc8e906917", 
+        "created": "2014-02-14 22:20:09", 
+        "device_id": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36", 
+        "device_name": null, 
+        "device_type": "web", 
+        "id": 328, 
+        "push_token": null, 
+        "updated": "2014-02-19 19:41:58", 
+        "user_id": 4
+      }, 
+      {
+        "active": 351, 
+        "auth_token": "780c4bba318a49ba84a8c2ccfdcd40b8", 
+        "created": "2014-02-17 15:47:18", 
+        "device_id": "1a0bcc8d8b55d840b2baedbaf8c2e986061fa763", 
+        "device_name": null, 
+        "device_type": "ios", 
+        "id": 329, 
+        "push_token": "2cbff931c46e9463c2de5726756a12654eb0cd1187b32ae150e82f8cb6b324de", 
+        "updated": "2014-02-28 17:27:34", 
+        "user_id": 4
+      }, 
+      {
+        "active": 5, 
+        "auth_token": "91f4913b6c2e4e9aaa53db8a971bcbbb", 
+        "created": "2014-02-17 18:10:25", 
+        "device_id": "4e5cda61ffea728c933e5f282a1b148810c616bb", 
+        "device_name": null, 
+        "device_type": "ios", 
+        "id": 330, 
+        "push_token": "a2f907d6745504e15fdc4eb3356c2de81a924bba205905f1baeebc52e3bb3460", 
+        "updated": "2014-02-17 18:12:29", 
+        "user_id": 4
+      }, 
+      {
+        "active": null, 
+        "auth_token": "198df12647ef4547adea26b4419b011a", 
+        "created": "2014-02-19 19:48:49", 
+        "device_id": "blah", 
+        "device_name": null, 
+        "device_type": "web", 
+        "id": 333, 
+        "push_token": null, 
+        "updated": "2014-02-28 18:39:09", 
+        "user_id": 4
+      }, 
+      {
+        "active": 11, 
+        "auth_token": "d1c66b7704da4557963e4d950e5fec2e", 
+        "created": "2014-02-21 16:02:00", 
+        "device_id": "806a0e134fa3b50c1ede446d2a54fb7b81646685", 
+        "device_name": null, 
+        "device_type": "ios", 
+        "id": 343, 
+        "push_token": "4001f09493c8a4b888b8437b9ba06c3b1978553ceb138cb3a13d3f37ee39791a", 
+        "updated": "2014-02-21 16:54:13", 
+        "user_id": 4
+      }, 
+      {
+        "active": 1307, 
+        "auth_token": "8cd6f2eca6414c3ca987859815b0315b", 
+        "created": "2014-02-28 18:16:20", 
+        "device_id": "333", 
+        "device_name": null, 
+        "device_type": "web", 
+        "id": 360, 
+        "push_token": null, 
+        "updated": "2014-03-03 23:21:12", 
+        "user_id": 4
+      }, 
+      {
+        "active": null, 
+        "auth_token": "6e971de1dd324a90b0b56f84e901452f", 
+        "created": "2014-02-28 18:39:29", 
+        "device_id": "blahy", 
+        "device_name": null, 
+        "device_type": "web", 
+        "id": 361, 
+        "push_token": null, 
+        "updated": "2014-02-28 18:39:29", 
+        "user_id": 4
+      }, 
+      {
+        "active": 50, 
+        "auth_token": "d4f19b5b2afc4eb4b9410b5389cd535b", 
+        "created": "2014-02-28 18:40:50", 
+        "device_id": "api_test1", 
+        "device_name": null, 
+        "device_type": "web", 
+        "id": 362, 
+        "push_token": null, 
+        "updated": "2014-03-03 23:23:13", 
+        "user_id": 4
+      }
+    ], 
+    "email": "ddgoin@gmail.com", 
+    "firstname": "Drew1", 
+    "id": 4, 
+    "lastname": "Goin2", 
+    "lobbyday_id": 51, 
+    "picture": "https://s3.amazonaws.com/convoice_assets/advocacyassociates/images/profiles/drew_IMG_75652685920797.jpeg", 
+    "user": "drew"
+  }, 
+  "success": {
+    "description": "", 
+    "message": "OK"
+  }, 
+  "warning": null
+}

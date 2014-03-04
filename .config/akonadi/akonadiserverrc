@@ -1,0 +1,12 @@
+[%General]
+Driver=QMYSQL
+
+[QMYSQL]
+Name=akonadi
+Host=
+Options="UNIX_SOCKET=/home/drew/.local/share/akonadi/socket-drew-Aspire-5750Z/mysql.socket"
+ServerPath=/usr/sbin/mysqld-akonadi
+StartServer=true
+
+[Debug]
+Tracer=null

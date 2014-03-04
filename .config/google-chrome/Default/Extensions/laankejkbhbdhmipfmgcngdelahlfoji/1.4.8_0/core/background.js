@@ -1,0 +1,1 @@
+chrome.runtime.onInstalled.addListener(function(e){if(e.reason==="update"&&e.previousVersion){var t=localStorage.getItem("previousVersion"),n=localStorage.getItem("disableUpdatePopup");t!==e.previousVersion&&n!=="true"&&(chrome.tabs.create({url:chrome.extension.getURL("update.html")}),localStorage.setItem("previousVersion",e.previousVersion))}});

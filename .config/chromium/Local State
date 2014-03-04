@@ -1,0 +1,64 @@
+{
+   "browser": {
+      "enabled_labs_experiments": [ "sync-tabs" ],
+      "last_redirect_origin": ""
+   },
+   "local_state": {
+      "multiple_profile_prefs_version": 7
+   },
+   "ntp": {
+      "intro_display_count": 11,
+      "promo_locale": "en-US",
+      "promo_version": 7,
+      "webstore_enabled": true
+   },
+   "profile": {
+      "info_cache": {
+         "Default": {
+            "avatar_icon": "chrome://theme/IDR_PROFILE_AVATAR_0",
+            "background_apps": false,
+            "name": "First user",
+            "user_name": "codehunter4@gmail.com"
+         }
+      },
+      "last_used": "Default"
+   },
+   "safe_browsing": {
+      "client_key": "-R24YCF8CY0YHRo2Zv6qBw==",
+      "wrapped_key": "AKEgNivaWm4qUmuh4KwT8nKeDv80m0hqjIUqdx7lZSWhGCkOWYda3WD21u-rl2wBsNS_QxDhztgGAJcVWMxRM2viLQnUCZGdwA=="
+   },
+   "show-first-run-bubble": true,
+   "shutdown": {
+      "num_processes": 4,
+      "num_processes_slow": 0,
+      "type": 1
+   },
+   "uninstall_metrics": {
+      "installation_date2": "1340168571",
+      "launch_count": "46"
+   },
+   "user_experience_metrics": {
+      "session_id": 45,
+      "stability": {
+         "breakpad_registration_fail": 5,
+         "breakpad_registration_ok": 0,
+         "crash_count": 0,
+         "debugger_not_present": 5,
+         "debugger_present": 0,
+         "exited_cleanly": true,
+         "incomplete_session_end_count": 0,
+         "last_timestamp_sec": "1356839809",
+         "launch_count": 5,
+         "launch_time_sec": "1356838843",
+         "page_load_count": 0,
+         "renderer_crash_count": 0,
+         "renderer_hang_count": 0,
+         "session_end_completed": true,
+         "stats_buildtime": "1347057062",
+         "stats_version": "20.0.1132.47-64-devel"
+      }
+   },
+   "was": {
+      "restarted": false
+   }
+}

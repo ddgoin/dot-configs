@@ -1,0 +1,31 @@
+[Data Source]
+DisplayName=Exams
+Parent=google-stub
+
+Enabled=true
+
+[Calendar]
+Color=#F0E2EF
+BackendName=caldav
+
+Selected=true
+
+[Authentication]
+Host=www.google.com
+Port=443
+Method=plain/password
+RememberPassword=true
+User=codehunter4@gmail.com
+
+[Security]
+Method=tls
+
+[Refresh]
+Enabled=true
+IntervalMinutes=30
+
+[WebDAV Backend]
+ResourcePath=/calendar/dav/codehunter4@gmail.com/events
+
+[Offline]
+StaySynchronized=true

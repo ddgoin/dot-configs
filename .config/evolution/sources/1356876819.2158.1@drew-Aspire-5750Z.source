@@ -1,0 +1,16 @@
+[Data Source]
+DisplayName=codehunter4@gmail.com
+Enabled=true
+Parent=1344453110.11149.21@drew-Aspire-5750Z
+
+[Mail Transport]
+BackendName=smtp
+
+[Authentication]
+Host=smtp.gmail.com
+Method=LOGIN
+Port=465
+User=codehunter4
+
+[Security]
+Method=ssl-on-alternate-port

@@ -1,0 +1,1240 @@
+<html>
+	<head>
+		<title>4chan Plus options</title>
+		<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+		<script type="text/javascript">
+			(function() {
+		    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+		    po.src = 'https://apis.google.com/js/plusone.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+		  })();
+		  
+			var mouseX;
+			var mouseY;
+			var dragging = false;
+			var dragOffsetX;
+			var dragOffsetY;
+			var feedback = false;
+			
+			var ext = 1;
+			
+			function loadSettings() {
+				if(ext == 2) {
+					safari.self.addEventListener("message", extensionResponse, false);
+					safari.self.tab.dispatchMessage("getSettings");
+				} else
+					load();
+			}
+			
+			var sound = new Array(
+			"sounds/contra_sound.wav",
+			"sounds/fireball.wav",
+			"sounds/quake.wav",
+			"sounds/holy.wav",
+			"sounds/ring.mp3",
+			"sounds/woosh.mp3",
+			"sounds/error.mp3",
+			"sounds/error1.mp3",
+			"sounds/error2.mp3",
+			"sounds/pop.mp3",
+			"sounds/ring2.mp3",
+			"sounds/ting.mp3",
+			"sounds/xylo.mp3",
+			"sounds/dong.mp3");
+			
+			if(window.location.hash.match(/feedback/gi)) {
+				setTimeout(function() {
+					feedback = true;
+					$("#quickrep").show();
+				}, 1000);
+			}
+			
+			var Base64 = {
+				// private property
+				_keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+			 
+				// public method for encoding
+				encode : function (input) {
+					var output = "";
+					var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+					var i = 0;
+			 
+					input = Base64._utf8_encode(input);
+			 
+					while (i < input.length) {
+						chr1 = input.charCodeAt(i++);
+						chr2 = input.charCodeAt(i++);
+						chr3 = input.charCodeAt(i++);
+			 
+						enc1 = chr1 >> 2;
+						enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+						enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+						enc4 = chr3 & 63;
+			 
+						if (isNaN(chr2)) {
+							enc3 = enc4 = 64;
+						} else if (isNaN(chr3)) {
+							enc4 = 64;
+						}
+			 
+						output = output +
+						this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
+						this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
+					}
+			 
+					return output;
+				},
+			 
+				// public method for decoding
+				decode : function (input) {
+					var output = "";
+					var chr1, chr2, chr3;
+					var enc1, enc2, enc3, enc4;
+					var i = 0;
+			 
+					input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+			 
+					while (i < input.length) {
+						enc1 = this._keyStr.indexOf(input.charAt(i++));
+						enc2 = this._keyStr.indexOf(input.charAt(i++));
+						enc3 = this._keyStr.indexOf(input.charAt(i++));
+						enc4 = this._keyStr.indexOf(input.charAt(i++));
+			 
+						chr1 = (enc1 << 2) | (enc2 >> 4);
+						chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+						chr3 = ((enc3 & 3) << 6) | enc4;
+			 
+						output = output + String.fromCharCode(chr1);
+			 
+						if (enc3 != 64) {
+							output = output + String.fromCharCode(chr2);
+						}
+						if (enc4 != 64) {
+							output = output + String.fromCharCode(chr3);
+						}
+					}
+					output = Base64._utf8_decode(output);
+					return output;
+			 
+				},
+			 
+				// private method for UTF-8 encoding
+				_utf8_encode : function (string) {
+					string = string.replace(/\r\n/g,"\n");
+					var utftext = "";
+					for (var n = 0; n < string.length; n++) {
+						var c = string.charCodeAt(n);
+			 
+						if (c < 128) {
+							utftext += String.fromCharCode(c);
+						}
+						else if((c > 127) && (c < 2048)) {
+							utftext += String.fromCharCode((c >> 6) | 192);
+							utftext += String.fromCharCode((c & 63) | 128);
+						}
+						else {
+							utftext += String.fromCharCode((c >> 12) | 224);
+							utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+							utftext += String.fromCharCode((c & 63) | 128);
+						}
+					}
+					return utftext;
+				},
+			 
+				// private method for UTF-8 decoding
+				_utf8_decode : function (utftext) {
+					var string = "";
+					var i = 0;
+					var c = c1 = c2 = 0;
+			 
+					while ( i < utftext.length ) {
+						c = utftext.charCodeAt(i);
+						if (c < 128) {
+							string += String.fromCharCode(c);
+							i++;
+						}
+						else if((c > 191) && (c < 224)) {
+							c2 = utftext.charCodeAt(i+1);
+							string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+							i += 2;
+						}
+						else {
+							c2 = utftext.charCodeAt(i+1);
+							c3 = utftext.charCodeAt(i+2);
+							string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+							i += 3;
+						}
+					}
+					return string;
+				}
+			}
+			
+			function extensionResponse(callback) {
+				//Settings fetched
+				if(callback.name == "settings") {
+					settings = callback.message;
+					console.log(settings);
+					load();
+				}
+			}
+			
+			function load() {
+				defaults = 	[
+								["version", 254],
+								["jumpbuttons1", "off"],
+								["jumpbuttons2", "off"],
+								["autopreloading", "off"],
+								["autopreloading1", "off"],
+								["autoexpand1", "off"],
+								["autoexpand2", "off"],
+								["smartbarpos", 2],
+								["expandtype", 1],
+								["refreshinterval", 1],
+								["customrefresh", 10],
+								["expandw", 800],
+								["expandh", 9999],
+								["progress", "off"]
+						];
+		
+				for(i = 0; i < defaults.length; i++) {
+					if(ext == 1) {
+						if(!localStorage[defaults[i][0]])
+							localStorage[defaults[i][0]] = defaults[i][1];
+					} else {
+						if(!settings[defaults[i][0]])
+							safari.self.tab.dispatchMessage("setSetting", {'field' : defaults[i][0], 'value' : defaults[i][1] });
+					}
+				}
+				
+				$(".option").click(function() {
+					var option = $(this).attr("id");
+					if($(this).attr("checked")) {
+						if(ext == 1)
+							localStorage[option] = "on";
+						else
+							safari.self.tab.dispatchMessage("setSetting", {'field' : option, 'value' : "on" });
+						var box = $(this).parent().parent();
+						if(box.attr("id").match(/option/))
+							box.attr("class", "active");
+					} else {
+						if(ext == 1)
+							localStorage[option] = "off";
+						else
+							safari.self.tab.dispatchMessage("setSetting", {'field' : option, 'value' : "off" });
+						if($(this).attr("class").match(/main/))	
+							$(this).parent().parent().attr("class", "inactive");
+					}
+				});	
+				
+				$(".changeoption").change(function() {
+					var option = $(this).attr("id");
+					if(ext == 1)
+						localStorage[option] = $(this).val();
+					else
+						safari.self.tab.dispatchMessage("setSetting", {'field' : option, 'value' : $(this).val() });
+				});	
+				
+				$(".textoption").keyup(function() {
+					var option = $(this).attr("id");
+					if(ext == 1)
+						localStorage[option] = $(this).val();
+					else
+						safari.self.tab.dispatchMessage("setSetting", {'field' : option, 'value' : $(this).val() });
+				});	
+				
+				$(".radiooption").change(function() {
+					var name = $(this).attr("name");
+					var val = $(this).val();
+					if(ext == 1)
+						localStorage[name] = val;
+					else
+						safari.self.tab.dispatchMessage("setSetting", {'field' : name, 'value' : val });
+				});
+					
+				//draggable feedback
+				document.captureEvents(Event.MOUSEMOVE)
+				document.onmousemove = getMouseXY;
+				
+				document.getElementById("dragArea").addEventListener("mousedown", function(e) {
+					startDrag();
+				}, false);
+				
+				document.addEventListener("mouseup", function(e) {
+					stopDrag();
+				}, false);
+				
+				//Hide info messages
+				var divs = document.getElementsByTagName("div");
+				
+				for(var i = 0; i < divs.length; i++) {
+					divs[i].setAttribute("onMouseOut", "hideMsg()");
+				}
+				
+				//Settings string
+				var settingsArray = [];
+				if(ext == 1) {
+					for(i in localStorage) {
+						settingsArray.push(i + ":" + localStorage[i]);
+						//set setting
+						var item = $("#" + i);
+						var klasse = item.attr("class");
+						if(klasse && klasse.match(/^option/) && localStorage[i] != "off") //checkboxes
+							item.attr("checked", "true");
+						else if(klasse && klasse.match(/^radio/)) { //Radio buttons
+							var name = item.attr("name");
+							$('input:radio[name=' + name + ']:nth(' + localStorage[i] + ')').attr('checked',true);
+						} else { //selections and inputs
+							item.val(localStorage[i]);
+							if(klasse && klasse.match(/main/))
+								item.parent().parent().attr("class", "inactive");
+						}
+					}
+				} else {
+					for(i in settings) {
+						settingsArray.push(i + ":" + settings[i]);
+						//set setting
+						var item = $("#" + i);
+						var klasse = item.attr("class");
+						if(klasse && klasse.match(/^option/) && settings[i] != "off") //checkboxes
+							item.attr("checked", "true");
+						else if(klasse && klasse.match(/^radio/)) { //Radio buttons
+							var name = item.attr("name");
+							$('input:radio[name=' + name + ']:nth(' + settings[i] + ')').attr('checked',true);
+						} else { //selections and inputs
+							item.val(settings[i]);
+							if(klasse && klasse.match(/main/))
+								item.parent().parent().attr("class", "inactive");
+						}
+					}
+				}
+				
+				//loop through unset settings
+				$(".option").each(function() {
+					var option = $(this).attr("id");
+					if(ext == 1) {
+						if(!localStorage[option]) {
+							localStorage[option] = "on";
+							$(this).attr("checked", "true");
+						}
+					} else {
+						if(!settings[option]) {
+							safari.self.tab.dispatchMessage("setSetting", {'field' : option, 'value' : "on" });
+							$(this).attr("checked", "true");
+						}
+					}
+				});
+				
+				document.post.settings.value = Base64.encode(settingsArray.join("&"));
+				document.post.version.value = ext == 1 ? localStorage['version'] : settings['version'] + " (Safari)";
+			}
+			
+			function exports() {
+				var settingsArray = [];
+				if(ext == 1) {
+					for(i in localStorage) {
+						if(i != "hiddenThreads")
+							settingsArray.push(i + ":" + localStorage[i]);
+					}
+				} else {
+					for(i in settings) {
+						if(i != "hiddenThreads")
+							settingsArray.push(i + ":" + settings[i]);
+					}
+				}
+				prompt("Save the following string to restore the current settings at any time", Base64.encode(settingsArray.join("&")));
+			}
+			
+			function imports() {
+				var string = Base64.decode(prompt("Insert settings string"));
+				if(string) {
+					var settingsArray = string.split("&");
+					for(i = 0; i < settingsArray.length; i++) {
+						var crntSetting = settingsArray[i].split(":");
+						if(ext == 1)
+							localStorage[crntSetting[0]] = crntSetting[1];
+						else
+							safari.self.tab.dispatchMessage("setSetting", {'field' : crntSetting[0], 'value' : crntSetting[1] });
+					}
+				}
+				console.log(ext == 1 ? localStorage['version'] : settings['version']);
+				window.location.reload();
+			}
+			
+			function setSound(option, val) {
+				//localStorage['option' + option] = val;
+				var nsound = new Audio(sound[val]);
+				nsound.play();
+			}
+			
+			function positionReply(val) {
+				//localStorage['option55'] = val;
+			}
+			
+			function resize() {
+				//Position donate
+				var db = document.getElementById("donatebox");
+				if(document.body.offsetWidth < 1200)
+					db.style.left = "610px";
+				else {
+					db.style.left = "";
+					db.style.right = "0px";
+				}
+			}
+			
+			function getMouseXY(e) {
+				mouseX = e.pageX;
+				mouseY = e.pageY;
+				
+				if(dragging)
+					dragAround();
+			}
+			
+			function getPos(obj) {
+				var curleft = 0;
+				var curtop = 0;
+				if (obj.offsetParent) {
+					do {
+						curleft += obj.offsetLeft;
+						curtop += obj.offsetTop;
+					} while (obj = obj.offsetParent);
+				}
+				return [curleft, curtop];
+			}
+			
+			function dragAround() {
+				var replybox = document.getElementById('quickrep');
+				replybox.style.left = mouseX - dragOffsetX;
+				replybox.style.top = mouseY - dragOffsetY;
+			}
+			
+			function startDrag() {
+				var replybox = document.getElementById('quickrep');
+				var offset = getPos(replybox);
+				dragOffsetX = mouseX - offset[0];
+				dragOffsetY = mouseY - offset[1];
+				dragging = true;
+			}
+			
+			function stopDrag() {
+				dragging = false;
+			}
+			function msg(id, obj) {
+				var msg = document.getElementById("msg");
+				
+				switch(id) {
+					case 1:
+					msg.innerHTML = "Hover your mouse over images to preview the large version";
+					break;
+					case 3:
+					msg.innerHTML = "When an image is loaded, store the biggest version of the image in the preview image. This way the big version will be stored on your computer when the image is saved instead of the thumbnail, so you don't have to open/expand the image in order to save it.";
+					break;
+					case 4:
+					msg.innerHTML = "Show preview of a quoted post above its reference when hovering your mouse over";
+					break;
+					case 5:
+					msg.innerHTML = "Shows the full postnumber on the /b/ board, instead of xxx as the last three numbers";
+					break;
+					case 6:
+					msg.innerHTML = "Automatically fetch new posts in a thread without refreshing the page";
+					break;
+					case 7:
+					msg.innerHTML = "Determines the number of seconds to wait before checking for new posts within a thread";
+					break;
+					case 8:
+					msg.innerHTML = "When the page is scrolled down to the bottom while the tab/window is active and one or more new posts appear, scroll the page along. This way you can lean back to read posts in a thread";
+					break;
+					case 9:
+					msg.innerHTML = "If both the auto-scroll feature and the quickreply box feature (see below) are turned on, scroll the quickreply box along with the page under the same conditions";
+					break;
+					case 10:
+					msg.innerHTML = "Add a button next to each thread on boards and optionally to the smart bar to open a quickreply/new thread box";
+					break;
+					case 11:
+					msg.innerHTML = "Enable the quickreply box on board pages";
+					break;
+					case 12:
+					msg.innerHTML = "Enable the quickreply box within threads";
+					break;
+					case 13:
+					msg.innerHTML = "Add a button next to each post to allow reporting a post more quickly";
+					break;
+					case 14:
+					msg.innerHTML = "Show an embedded Youtube video instead of a link when a Youtube link is posted";
+					break;
+					case 15:
+					msg.innerHTML = "Make links clickable";
+					break;
+					case 16:
+					msg.innerHTML = "Change the filename of images to the name it was posted under, instead of the generated name by 4chan (works only WITHIN threads, not on board pages!)";
+					break;
+					case 17:
+					msg.innerHTML = "Show a bar in the bottom of the page with useful functions";
+					break;
+					case 18:
+					msg.innerHTML = "Remove the original replybox in the top of the page";
+					break;
+					case 19:
+					msg.innerHTML = "Add the number of newly fetched posts within a thread to the title of the tab when you leave the tab, lose focus or when newly fetched posts aren't viewed yet";
+					break;
+					case 20:
+					msg.innerHTML = "Always preload or expand all images in a thread and/or on boards. Note that this will cause explicit content to be downloaded, high bandwidth usage and possible speed loss";
+					break;
+					case 21:
+					msg.innerHTML = "Preload the large version of all images within threads automatically";
+					break;
+					case 22:
+					msg.innerHTML = "Preload the large version of all images on board pages automatically";
+					break;
+					case 23:
+					msg.innerHTML = "Enlarge images to full scale, fit the screen or custom dimensions when clicking them, instead of opening them in a new tab. Functionality of opening images in a new tab can still be preserved by enabling 'Open images in a new tab on doubleclick'";
+					break;
+					case 24:
+					msg.innerHTML = "Open images in a new tab by doubleclicking them";
+					break;
+					case 25:
+					msg.innerHTML = "Determines the position of the smartbar";
+					break;
+					case 26:
+					msg.innerHTML = "Add the current board to the smartbar within threads. Opens quicknavigation to every board when hoveling over";
+					break;
+					case 27:
+					msg.innerHTML = "Add the current board to the smartbar on board pages. Opens quicknavigation to every board when hoveling over";
+					break;
+					case 28:
+					msg.innerHTML = "Add a shortcut for quick reply to the smartbar within threads (protip: check 'Remove original replybox')";
+					break;
+					case 29:
+					msg.innerHTML = "Add a shortcut for new threads to the smartbar on board pages (protip: check 'Remove original replybox')";
+					break;
+					case 30:
+					msg.innerHTML = "Add quicklinks to jump to the top and bottom of the page to the smartbar within threads";
+					break;
+					case 31:
+					msg.innerHTML = "Add quicklinks to jump to the top and bottom of the page to the smartbar on boards";
+					break;
+					case 32:
+					msg.innerHTML = "Add a reply/sage counter to the smartbar within threads";
+					break;
+					case 33:
+					msg.innerHTML = "Add the smartbar to threads";
+					break;
+					case 34:
+					msg.innerHTML = "add the smartbar to board pages";
+					break;
+					case 35:
+					msg.innerHTML = "Allows bookmarking of threads to get back to them whenever you like (currently works only when the smartbar is enabled)";
+					break;
+					case 36:
+					msg.innerHTML = "Expand images to full scale";
+					break;
+					case 37:
+					msg.innerHTML = "Expand images to fit within the screen";
+					break;
+					case 38:
+					msg.innerHTML = "Expand images to fit within a custom defined space";
+					break;
+					case 39:
+					msg.innerHTML = "Show an embedded Vocaroo voiceclip instead of a link when a Vocaroo link is posted";
+					break;
+					case 40:
+					msg.innerHTML = "Expand all images on board pages automatically";
+					break;
+					case 41:
+					msg.innerHTML = "Expand all images within threads automatically";
+					break;
+					case 42:
+					msg.innerHTML = "Add a button to preload/expand all images to the smartbar within threads";
+					break;
+					case 43:
+					msg.innerHTML = "Add a button to preload/expand all images to the smartbar on board pages";
+					break;
+					case 58:
+					msg.innerHTML = "Disable reply button after posting to prevent flood error";
+					break;
+					default:
+					msg.innerHTML = "No description available yet";
+					break;
+				}
+				
+				msg.style.display = "block";
+				msg.style.left = Math.min(Math.max(50, mouseX - msg.offsetWidth / 2), document.body.offsetWidth - 425);
+				msg.style.top = getPos(obj)[1] + 18;
+			}
+			
+			function hideMsg() {
+				document.getElementById("msg").style.display = "none";
+			}
+			
+			function postFeedback() {
+				if(!feedback) {
+					feedback = true;
+					document.getElementById("quickrep").style.display = "block";
+				} else {
+					feedback = false;
+					document.getElementById("quickrep").style.display = "none";
+					document.getElementById('postFrame').style.display = 'none';
+				}
+			}
+		</script>
+		<style type="text/css">
+			body {
+				background: #ffffee	url(img/fade.png) repeat-x 0px 0px;
+				padding: 0px 15px 0px 10px;
+				margin: 0px;
+				font-family: Arial, helvetica, sans-serif;
+				color: #880000;
+				height: 100%;
+			}
+			
+			hr {
+				margin: 1px 5px 2px 5px;
+				width: 130px;
+				float: left;
+			}
+			
+			h2 {
+				margin: 0px 0px 3px 5px;
+				font-size: 14px;
+				display: inline;
+			}
+			
+			#header {
+				font-size: 26px;
+				font-weight: bold;
+				padding: 5px 5px 35px 17px;
+			}
+			
+			p {
+				margin: 2px;	
+			}
+			
+			.active {
+				display:table;
+				margin-bottom: 20px;
+			}
+			
+			.inactive {
+				display:table;
+				margin-bottom: 20px;
+			}
+			
+			.inactive > .box {
+				opacity: 0.25;	
+			}
+			
+			.check {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			
+			.box, td {
+				display: table-cell;
+				background: #FFFFFF;
+				border:1px solid #880000;
+				width: 600px;
+				float: left;
+				font-size: 12px;
+			}
+			
+			td {
+				border: none;
+			}
+			
+			.box > span {
+				padding: 3px;
+				display: block;
+				width: 594px;
+				background: #ffccaa;
+				font-size: 15px;
+				font-weight: bold;
+			}
+			
+			#donatebox {
+				width: 400px;
+				height: 108px;
+				position: fixed;
+				bottom: 0px;
+				right: 0px;
+				overflow: hidden;
+			}
+			
+			#donate {
+				display: block;
+				width: 400px;
+				height: 108px;
+				background: url(img/donate.png);
+				cursor: pointer;
+			}
+			
+			#donate:hover {
+				background-position: -400px 0px;
+			}
+			
+			img {
+				border:none;
+			}
+			
+			#contact {
+				position: absolute;
+				top: 17px;
+				left: 339px;
+				font-size: 12px;
+				z-index: 1;
+			}
+			
+			#contact div {
+				float: left;
+			}
+			
+			#contact a {
+				text-decoration: none;
+				font-weight: bold;
+				font-size: 11px;
+			}
+			
+			a {
+				color: #880000;
+			}
+			
+			#content {
+				padding-bottom: 25px;
+			}
+			
+			#msg {
+				position: absolute;
+				color: #000;
+				top: 50px;
+				left: 100px;
+				border: 1px solid #97785e;
+				background: #ececcb;
+				font-size: 11px;
+				padding: 2px 5px;
+				border-radius: 2px 2px 2px 2px;
+				-webkit-box-shadow: 1px 1px 3px #888;
+				display: none;
+				max-width: 400px;
+				z-index: 3;
+			}
+			
+			#quickrep {
+				position: absolute;
+				background: #FFFFFF;
+				border: 4px solid #FFF;
+				border-radius: 4px 4px 4px 4px;
+				-webkit-box-shadow: 2px 2px 8px #888;
+				top: 200px;
+				left: 300px;
+				z-index: 2;
+				display: none;
+			}
+			
+			.postblock{
+				background:#EA8;color:#800000;font-weight:800;
+				border:1px solid #800;font-size:10pt;padding:0 5px;line-height:20px;
+			}
+		</style>
+	</head>
+	<body onload="loadSettings();" onResize="resize()">
+		<div id="msg">
+			
+		</div>
+		
+		<div id="header">
+			<img src='icon-48.png' style='vertical-align: middle;' /> 4chan Plus
+		</div>
+		
+		<div style="margin: -20px 0px 0px 540px; font-size: 12px"><a href="#" onClick="exports()">Export</a> &nbsp; <a href="#" onClick="imports()">import</a></div>
+		<div id="content">
+			<div id="option1" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="hoverable" />
+				</div>
+				<div class="box">
+					<span onMouseOver="msg(1, this)">
+						Hoverable images
+					</span>	
+					<p>			
+						<div onMouseOver="msg(3, this)"><input type="checkbox"  class="option" id="replaceSRC" /> Replace images with the large version (scaled down) after hovering over for easy saving</div>
+						<!-- <div><input type="checkbox" id="op125" onClick="alterSub(this.checked, 125)" /> Autoplay animated gifs when hovering over the thumbnail</div> -->
+					</p>
+				</div>
+			</div>
+			
+			<div id="option10" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="expandable">
+				</div>
+				<div class="box">
+					<span onMouseOver="msg(23, this)">
+						Expandable images
+					</span>
+					<p>
+						<div onMouseOver="msg(24, this)"><input type="checkbox" class="option" id="dblclickable" /> Open images in new tab on doubleclick</div>
+						<br />
+						<div onMouseOver="msg(36, this)"><input type="radio" class="radiooption" id="expandtype" name="expandtype" value="0" /> Original size</div>
+						<div onMouseOver="msg(37, this)"><input type="radio" class="radiooption" id="expandtype" name="expandtype" value="1" /> Fit to screen</div>
+						<div><span style="margin-left: 21px; font-size: 10px">&#8627; <input type="checkbox" class="option" id="ignoreheight" /> ignore screen height</span></div>
+						<div onMouseOver="msg(38, this)"><input type="radio" class="radiooption" id="expandtype" name="expandtype" value="2" /> Max. width <input type="text" maxlength="4" id="expandw" class="textoption" style="width: 40px" /> Max. height <input type="text" maxlength="4"  id="expandh" class="textoption" style="width: 40px" /></div>
+						<!--<div><input type="checkbox" id="op126" onClick="alterSub(this.checked, 126)" /> Autoplay animated gifs when expanding</div>-->
+					</p>
+				</div>
+			</div>
+			
+			<div id="option9" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="autopreloading">
+				</div>
+				<div class="box">
+					<span  onMouseOver="msg(20, this)">smart bar
+					
+						Automatic preloading and expanding
+					</span>
+					<p>
+						<table>
+							<tr>
+								<td>
+									<div onMouseOver="msg(22, this)"><input type="checkbox" class="option" id="autopreloading1" />Always preload all images on boards</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(40, this)"><input type="checkbox" class="option" id="autoexpand1" />Always expand all images on boards</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div onMouseOver="msg(21, this)"><input type="checkbox" class="option" id="autopreloading2" />Always preload all images within threads</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(41, this)"><input type="checkbox" class="option" id="autoexpand2" />Always expand all images within threads</div>
+								</td>
+							</tr>
+						</table>
+					</p>
+				</div>
+			</div>
+			
+			<div id="option2" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="quotes">
+				</div>
+				<div class="box" onMouseOver="msg(4, this)">
+					<span>
+						Postpreview
+					</span>
+				</div>
+			</div>
+			
+			<div id="option2211" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="expansion">
+				</div>
+				<div class="box" onMouseOver="msg(99, this)">
+					<span>
+						Expandable threads
+					</span>
+				</div>
+			</div>
+			
+			<!--<div id="option4" class="active">
+				<div class="check">
+					<input type="checkbox" id="op4" onClick="alterMain(this.checked, 4)">
+				</div>
+				<div class="box" onMouseOver="msg(5, this)">
+					<span>
+						Restore postnumbers in /b/ (XXX)
+					</span>
+				</div>
+			</div>-->
+			
+			<div id="option8" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="unread">
+				</div>
+				<div class="box" onMouseOver="msg(19, this)">
+					<span>
+						Show the number of unread posts in the titlebar
+					</span>
+				</div>
+			</div>
+			
+			<div id="option3" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="threadupdating">
+				</div>
+				<div class="box">
+					<span onMouseOver="msg(6, this)">
+						Thread updating
+					</span>
+					<p>		
+						<div onMouseOver="msg(7, this)"><input type="radio" id="refreshinterval" name="refreshinterval" class="radiooption" value="0" /> Every second</div>
+						<div onMouseOver="msg(7, this)"><input type="radio" id="refreshinterval" name="refreshinterval" class="radiooption" value="1" /> Every 3 seconds <span style="font-size: 10px">(recommended)</span></div>
+						<div onMouseOver="msg(7, this)"><input type="radio" id="refreshinterval" name="refreshinterval" class="radiooption" value="2" /> Every  <input type="text" maxlength="3" id="customrefresh" class="textoption" style="width: 30px" /> seconds</div><br />
+						
+						<div onMouseOver="msg(8, this)"><input type="checkbox" id="leanbackmode" class="option" /> <b>Lean back mode</b> <span style="font-size: 10px">(Auto-scroll when at bottom of page and new posts appear)</span></div>
+						<div onMouseOver="msg(9, this)"><input type="checkbox" id="leanbackreplies" class="option" /> Scroll quick-replybox along with auto-scrolling</div>
+					</p>
+				</div>
+			</div>
+			
+			<div id="option5" class="active">
+				<div class="check">
+					<input type="checkbox" class="option" id="quickreply">
+				</div>
+				<div class="box">
+					<span onMouseOver="msg(10, this)">
+						Quickreply
+					</span>
+					<p>		
+						<div onMouseOver="msg(11, this)"><input type="checkbox" class="option" id="quickreply1" /> On board pages</div>
+						<div onMouseOver="msg(12, this)"><input type="checkbox" class="option" id="quickreply2" /> Within threads</div>
+						<br />
+						<div onMouseOver="msg(58, this)"><input type="checkbox" class="option" id="cooldown" /> Cooldown counter</div>
+						<!--<br />
+						<div onMouseOver="msg(18, this)"><input type="checkbox" id="op54" onClick="alterSub(this.checked, 54)" /> Remove original replybox</div>-->
+					</p>
+				</div>
+			</div>
+			
+			<div id="option521" class="active">
+				<div class="check">
+					<input type="checkbox" class="option" id="backlinking">
+				</div>
+				<div class="box">
+					<span onMouseOver="msg(55, this)">
+						Backlinking
+					</span>
+					<p>		
+						<div onMouseOver="msg(56, this)"><input type="checkbox" class="option" id="backlinking1" /> On board pages</div>
+						<div onMouseOver="msg(57, this)"><input type="checkbox" class="option" id="backlinking2" /> Within threads</div>
+					</p>
+				</div>
+			</div>
+			
+			<!--<div id="option130" class="active">
+				<div class="check">
+					<input type="checkbox" id="op130" onClick="alterMain(this.checked, 130)">
+				</div>
+				<div class="box">
+					<span onMouseOver="msg(35, this)">
+						Bookmarks (thread watcher)
+					</span>
+				</div>
+			</div>-->
+			
+			<div id="option110" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="smartbar">
+				</div>
+				<div class="box">
+					<span onMouseOver="msg(17, this)">
+						Smartbar
+					</span>
+					<p>	
+						<div onMouseOver="msg(25, this)">&nbsp;&nbsp;Position the smartbar <select class="changeoption" id="smartbarpos"><option value='1'>on the leftside</option><option value='2'>in the center</option><option value='3'>on the rightside</option></select> of the screen</div>
+						<br />
+						<table>
+							<tr>
+								<td>
+									<div onMouseOver="msg(33, this)"><input type="checkbox" class="option" id="smartbar1" /><h2>On board pages</h2><br /><hr></div>
+								</td>
+								<td>
+									<div onMouseOver="msg(34, this)"><input type="checkbox" class="option" id="smartbar2" /><h2>Within threads</h2><br /><hr></div>
+								</td>
+							</tr>
+							<!--<tr>
+								<td>
+									<div onMouseOver="msg(26, this)"><input type="checkbox" id="op111" onClick="alterSub(this.checked, 111)" /> Boardnavigation</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(27, this)"><input type="checkbox" id="op112" onClick="alterSub(this.checked, 112)" /> Boardnavigation</div>
+								</td>
+							</tr>-->
+							<tr>
+								<td>
+									<div onMouseOver="msg(42, this)"><input type="checkbox" class="option" id="preloading1" /> Preload/expand all</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(43, this)"><input type="checkbox" class="option" id="preloading2" /> Preload/expand all</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div onMouseOver="msg(28, this)"><input type="checkbox" class="option" id="quickbutton1" /> New Thread</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(29, this)"><input type="checkbox" class="option" id="quickbutton2" /> Reply</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div onMouseOver="msg(30, this)"><input type="checkbox" class="option" id="jumpbuttons1" /> Jump to top/bottom</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(31, this)"><input type="checkbox" class="option" id="jumpbuttons2" /> Jump to top/bottom</div>
+								</td>
+							</tr>
+							<!--<tr>
+								<td>
+									<div onMouseOver="msg(32, this)"><input type="checkbox" id="op117" onClick="alterSub(this.checked, 117)" /> Replycounter</div>
+								</td>
+								<td>
+								</td>
+							</tr>-->
+						</table>
+					</p>
+				</div>
+			</div>
+			
+			<div id="option1120" class="active">
+				<div class="check">
+					<input type="checkbox" class="option main" id="embeds">
+				</div>
+				<div class="box">
+					<span onMouseOver="msg(44, this)">
+						Links &amp; embeds
+					</span>
+					<p>	
+						<table>
+							<tr>
+								<td>
+									<div onMouseOver="msg(45, this)"><input type="checkbox" class="option" id="embeds1" /><h2>On board pages</h2><br /><hr></div>
+								</td>
+								<td>
+									<div onMouseOver="msg(46, this)"><input type="checkbox" class="option" id="embeds2" /><h2>Within threads</h2><br /><hr></div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div onMouseOver="msg(47, this)"><input type="checkbox" class="option" id="links1" /> Activate links</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(48, this)"><input type="checkbox" class="option" id="links2" /> Activate links</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div onMouseOver="msg(49, this)"><input type="checkbox" class="option" id="email1" /> Activate emails</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(50, this)"><input type="checkbox" class="option" id="email2" /> Activate emails</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div onMouseOver="msg(51, this)"><input type="checkbox" class="option" id="youtube1" /> YouTube embed</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(52, this)"><input type="checkbox" class="option" id="youtube2" /> YouTube embed</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div onMouseOver="msg(53, this)"><input type="checkbox" class="option" id="soundcloud1" /> Soundcloud embed</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(54, this)"><input type="checkbox" class="option" id="soundcloud2" /> Soundcloud embed</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div onMouseOver="msg(53, this)"><input type="checkbox" class="option" id="vocaroo1" /> Vocaroo embed</div>
+								</td>
+								<td>
+									<div onMouseOver="msg(54, this)"><input type="checkbox" class="option" id="vocaroo2" /> Vocaroo embed</div>
+								</td>
+							</tr>
+						</table>
+					</p>
+				</div>
+			</div>
+			
+			<!--<div id="option6" class="active">
+				<div class="check">
+					<input type="checkbox" id="op6" onClick="alterMain(this.checked, 6)">
+				</div>
+				<div class="box" onMouseOver="msg(13, this)">
+					<span>
+						Quickreport button
+					</span>
+				</div>
+			</div>
+			
+			<div id="option7" class="active">
+				<div class="check">
+					<input type="checkbox" id="op7" onClick="alterMain(this.checked, 7)">
+				</div>
+				<div class="box">
+					<span>
+						Content features
+					</span>
+					<p>		
+						<div onMouseOver="msg(14, this)"><input type="checkbox" id="op71" onClick="alterSub(this.checked, 71)" /> Embed YouTube videos</div>
+						<div onMouseOver="msg(39, this)"><input type="checkbox" id="op73" onClick="alterSub(this.checked, 74)" /> Embed Vocaroo clips</div>
+						<div onMouseOver="msg(15, this)"><input type="checkbox" id="op72" onClick="alterSub(this.checked, 72)" /> Activate links</div>
+						<div onMouseOver="msg(16, this)"><input type="checkbox" id="op73" onClick="alterSub(this.checked, 73)" /> Restore original filenames of images (<b>broken, fix is on the way!</b>)</div>
+					</p>
+				</div>
+			</div>
+			
+			<div id="option120" class="active">
+				<div class="check">
+					<input type="checkbox" id="op120" onClick="alterMain(this.checked, 120)">
+				</div>
+				<div class="box">
+					<span>
+						Sounds
+					</span>
+					<p>		
+						<table>
+							<tr>
+								<td><h2>Event</h2></td>
+								<td><h2>Sound</h2></td>
+							</tr>
+							<tr>
+								<td>New posts fetched</td>
+								<td>
+									<select id="newposts" onChange="setSound(121, this.value)">
+										<option value="">None</option>
+										<option value="0">Contra death</option> 
+										<option value="1">Mario fireball</option>
+										<option value="2">Quake</option>
+										<option value="3">Holy water</option>
+										<option value="4">Notify</option> 
+										<option value="5">Woosh</option>
+										<option value="6">Error</option>
+										<option value="7">WinXP</option>
+										<option value="8">Block</option>
+										<option value="9">Pop</option>
+										<option value="10">Enter</option>
+										<option value="11">Ting</option>
+										<option value="12">Xylo</option>
+										<option value="13">Bell</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Thread/reply posted</td>
+								<td>
+									<select id="postsuccess" onChange="setSound(122, this.value)">
+										<option value="">None</option>
+										<option value="0">Contra death</option> 
+										<option value="1">Mario fireball</option>
+										<option value="2">Quake armor</option>
+										<option value="3">Holy water</option>
+										<option value="4">Notify</option> 
+										<option value="5">Woosh</option>
+										<option value="6">Error</option>
+										<option value="7">WinXP</option>
+										<option value="8">Block</option>
+										<option value="9">Pop</option>
+										<option value="10">Enter</option>
+										<option value="11">Ting</option>
+										<option value="12">Xylo</option>
+										<option value="13">Bell</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Replying/posting failed</td>
+								<td>
+									<select id="posterror" onChange="setSound(123, this.value)">
+										<option value="">None</option>
+										<option value="0">Contra death</option> 
+										<option value="1">Mario fireball</option>
+										<option value="2">Quake</option>
+										<option value="3">Holy water</option>
+										<option value="4">Notify</option> 
+										<option value="5">Woosh</option>
+										<option value="6">Error</option>
+										<option value="7">WinXP</option>
+										<option value="8">Block</option>
+										<option value="9">Pop</option>
+										<option value="10">Enter</option>
+										<option value="11">Ting</option>
+										<option value="12">Xylo</option>
+										<option value="13">Bell</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>After post cooldown</td>
+								<td>
+									<select id="cooldown" onChange="setSound(124, this.value)">
+										<option value="">None</option>
+										<option value="0">Contra death</option> 
+										<option value="1">Mario fireball</option>
+										<option value="2">Quake</option>
+										<option value="3">Holy water</option>
+										<option value="4">Notify</option> 
+										<option value="5">Woosh</option>
+										<option value="6">Error</option>
+										<option value="7">WinXP</option>
+										<option value="8">Block</option>
+										<option value="9">Pop</option>
+										<option value="10">Enter</option>
+										<option value="11">Ting</option>
+										<option value="12">Xylo</option>
+										<option value="13">Bell</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</p>
+				</div>
+			</div>-->	
+		</div>
+		
+		<div id="contact">
+			<div style='padding: 0px 10px'><a href='javascript:postFeedback()'><img src='img/feedback.png' style='vertical-align:middle; padding: 1px 2px'>Feedback</a></div>
+			<div><a href="https://chrome.google.com/webstore/detail/pinelipedelckihohgdlpcclgocodhjj#cx-comment-node" target="_blank" style="margin-right: 10px"><img src='img/rate.png' style='vertical-align:middle; padding: 1px 2px'>Rate it!</a></div>
+			<div><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="https://chrome.google.com/extensions/detail/pinelipedelckihohgdlpcclgocodhjj" layout="button_count" action="recommend" font="lucida grande"></fb:like></div>
+			<!-- <div class="g-plusone" data-annotation="inline" data-width="120" data-href="https://chrome.google.com/webstore/detail/pinelipedelckihohgdlpcclgocodhjj"></div> -->
+		</div>
+		
+		<div id="donatebox">
+			<!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="margin: 0px; border: none">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+			<input type="image" src="img/space.png" id="donate" name="submit" alt="  ">
+			<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>-->
+			<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=zoomify4chan%40gmail%2ecom&lc=US&item_name=4chan%20Plus&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted" target="_blank"><img src="img/space.png" id="donate" alt="Donate!"></a>
+		</div>
+		
+		<div id="quickrep" style="width: 450px">
+			<div>
+				<div id="dragArea" style="height: 18px; background: #EEE; padding: 0px 2px 0px 2px; margin-bottom: 2px">
+					<div style="float: left; cursor: move">Feedback</div>
+					<div style="float: left; padding: 2px 0px 0px 20px; font-size: 15px; width: 340px; height: 18px; cursor: move"></div>
+					<div style="float: right; cursor: pointer;">
+						<img src="img/x.png" onclick="javascript:document.getElementById('quickrep').style.display = 'none'; document.post.com.value = ''; feedback = false; document.getElementById('postFrame').style.display = 'none';">
+					</div>
+				</div>
+			</div>
+		<div><form name="post" action="http://www.tumispro.nl/zoomify4chan/feedback.php" method="POST" target="postFrame">
+			<table cellpadding="1" cellspacing="1">
+			<tbody><tr><td></td><td class="postblock" align="left"><b>Name</b></td><td><input class="inputtext" type="text" name="name" value="Anonymous" size="28"></td></tr>
+			<tr><td></td><td class="postblock" align="left"><b>E-mail</b></td><td><input class="inputtext" type="text" name="email" size="28"><span style='font-size: 11px'> (necessary if you'd like a response)</span></td></tr>
+			<tr><td></td><td class="postblock" align="left"><b>Type</b></td><td>
+			<input type="hidden" name="settings" value="" />
+			<input type="hidden" name="version" value="" />
+			<select name="fbtype">
+				<option value="Feature suggestion">Feature suggestion</option>
+				<option value="Bug report">Bug report</option>
+				<option value="Comment">Comment</option>
+				<option value="Other">Other</option>
+			</select>				</select></td></tr>
+			<tr><td valign="bottom"></td><td class="postblock" align="left"><b>Comment</b></td><td><textarea class="inputtext" name="com" cols="48" rows="4" wrap="soft"></textarea></td></tr>
+			
+			<tr><td></td><td colspan="2">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody></tbody></table></td></tr></tbody></table><input type="submit" value="Send" onClick="document.getElementById('postFrame').style.display = 'block'; setTimeout(function() {post.com.value = ''; }, 100)" /></form></div>
+			
+			<iframe src="about:blank" style="width: 400px; height: 35px; border: none; display: none; overflow: hidden" id="postFrame">
+			
+			</iframe>
+			
+			<!-- <iframe src="http://www.tumispro.nl/zoomify4chan/zoomifyfeedback.php" style="width: 450px; height: 270px; border: none">
+			</iframe> -->
+		</div>
+	</body>
+</html>

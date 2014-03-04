@@ -1,0 +1,22 @@
+[Data Source]
+DisplayName=ddgoin@gmail.com
+Enabled=true
+Parent=1389990638.1521.13@drewlap-OEM
+
+[Mail Composition]
+Bcc=
+Cc=
+DraftsFolder=folder://local/Drafts
+SignImip=true
+TemplatesFolder=folder://local/Templates
+
+[Mail Identity]
+Address=ddgoin@gmail.com
+Name=Drew Goin
+Organization=
+ReplyTo=
+SignatureUid=none
+
+[Mail Submission]
+SentFolder=folder://local/Sent
+TransportUid=1389990638.1521.11@drewlap-OEM

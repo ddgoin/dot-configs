@@ -1,0 +1,11 @@
+
+[Desktop Entry]
+Type=Application
+Exec=/home/drew/nomouseacc
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=nomouseacc
+Name=nomouseacc
+Comment[en_US]=disables mouse acceleration (testing)
+Comment=disables mouse acceleration (testing)

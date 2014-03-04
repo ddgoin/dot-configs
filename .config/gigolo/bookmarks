@@ -1,0 +1,10 @@
+
+[labshare on cbees]
+host=cbees
+folder=
+user=labuser
+scheme=smb
+share=labshare
+domain=CBEES
+path=
+autoconnect=1
