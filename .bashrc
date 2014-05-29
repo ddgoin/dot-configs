@@ -20,3 +20,6 @@ alias 'ls'="ls --color=tty"
 alias 'celar'="clear"
 alias 'sl'="ls"
 
+# TMUX
+[[ $- != *i* ]] && return 
+[[ -z "$TMUX" ]] && exec tmuxgo
