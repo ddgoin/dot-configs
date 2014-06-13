@@ -25,7 +25,7 @@ alias 'celar'="clear"
 alias 'sl'="ls"
 
 if [ -z "$SSH_CLIENT" ]; then
-	source ./.bashrc-local
+	source .bashrc-local
 else
-	source ./.bashrc-remote
+	source .bashrc-remote
 fi
