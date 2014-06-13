@@ -24,8 +24,6 @@
 
 # the name of your primary tmux session
 SESSION=$USER
-# your IRC nickname
-#IRC_NICK=$USER
 
 # if the session is already running, just attach to it.
 tmux has-session -t $SESSION
