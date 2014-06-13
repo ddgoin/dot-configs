@@ -2,6 +2,10 @@ if [ ! -d ~/scripts ]; then
 	mkdir ~/scripts
 fi
 
+if [ -d ~/.vim ]; then
+	rm -rf ~/.vim
+fi
+
 cp -sfr $PWD/scripts/. ~/scripts/
 cp -sfr $PWD/home/. ~/
 
