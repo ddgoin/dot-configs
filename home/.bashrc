@@ -10,7 +10,7 @@ fi
 export DYLD_LIBRARY_PATH=/usr/local/mysql/lib 
 export TERM="screen-256color"
 export set PATH=$PATH:~
-export PATH=/home/drew/scripts:$PATH
+export PATH=~/scripts:$PATH
 export CVNODE=drew
 
 ESC="\e["
