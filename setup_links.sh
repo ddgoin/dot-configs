@@ -7,7 +7,8 @@ if [ -d ~/.vim ]; then
 fi
 
 cp -sfr $PWD/scripts/. ~/scripts/
-cp -sfr $PWD/home/. ~/
+#cp -sfr $PWD/home/. ~/
+ln -sf $PWD/home/* ~/
 
 if [ -z "$SSH_CLIENT" ]; then
 	cp -sfr $PWD/local_only/scripts/. ~/scripts/
