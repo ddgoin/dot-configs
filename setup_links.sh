@@ -8,7 +8,14 @@ fi
 
 cp -sfr $PWD/scripts/. ~/scripts/
 #cp -sfr $PWD/home/. ~/
-ln -sf $PWD/home/* ~/
+
+for i in $PWD/home/*; do ln -s "$i" ~; done
+
+#pushd .;
+#cd $PWD/home;
+#ln -s * ~;
+#popd;
+#ln -s $PWD/home/. /home/$USER/
 
 if [ -z "$SSH_CLIENT" ]; then
 	cp -sfr $PWD/local_only/scripts/. ~/scripts/
