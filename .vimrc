@@ -1,13 +1,19 @@
 " COLORS!
 syntax enable
+filetype indent plugin on
 sy on
 set background=dark
 set t_Co=256
-colorscheme Tomorrow-Night-Bright
+" colorscheme Tomorrow-Night-Bright
 
+au Filetype python setl noet ts=4 sw=4
 " SPACES AND TABS!
-set tabstop=2
-set softtabstop=2
+set tabstop=4
+set autoindent
+set softtabstop=0
+set shiftwidth=0
+set noexpandtab
+set modeline
 
 set number
 set ruler
@@ -54,14 +60,20 @@ if has('vim_starting')
 
  " If there are uninstalled bundles found on startup,
  " this will conveniently prompt you to install them.
- NeoBundleCheck
+ " NeoBundleCheck
 
 "airline
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-"NeoBundle 'bling/vim-airline'
+NeoBundle 'bling/vim-airline'
 
 "fonts
 NeoBundle 'tomasr/molokai'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'tpope/vim-fugitive'
+
+NeoBundleCheck
+
 colorscheme molokai
+map <C-\> :NERDTreeToggle<CR>
