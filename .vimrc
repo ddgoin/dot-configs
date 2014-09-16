@@ -72,8 +72,15 @@ NeoBundle 'bling/vim-airline'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'valloric/youcompleteme'
+NeoBundle 'sjl/gundo.vim'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'scrooloose/syntastic'
 
 NeoBundleCheck
 
+nnoremap <F5> :GundoToggle<CR>
 colorscheme molokai
 map <C-\> :NERDTreeToggle<CR>
+hi normal ctermbg=NONE

@@ -1,5 +1,10 @@
+ctrlp.vim
+gundo.vim
 molokai
 neobundle.vim
 nerdtree
+syntastic
 vim-airline
 vim-fugitive
+vim-markdown
+youcompleteme

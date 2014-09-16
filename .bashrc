@@ -23,9 +23,12 @@ PS1="\[\e[01;37m\][\[\e[0m\]\[\e[01;33m\]\u@\H\[\e[0m\]\[\e[01;37m\]]\[\e[0m\]\[
 alias 'ls'="ls --color=tty"
 alias 'celar'="clear"
 alias 'sl'="ls"
+alias 'pandora'="aoss pianobar"
 
 if [ -z "$SSH_CLIENT" ]; then
 	source .bashrc-local
 else
 	source .bashrc-remote
 fi
+
+
