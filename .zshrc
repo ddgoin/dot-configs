@@ -22,6 +22,9 @@ alias 'ls'="ls --color=tty"
 alias 'celar'="clear"
 alias 'sl'="ls"
 alias 'pandora'="aoss pianobar"
+alias 'go'="tmuxgo.sh"
+alias 'say'='echo "$1" | espeak -s 150 2>/dev/null'
+alias 'alert'='say-note.sh'
 
 if [ -z "$SSH_CLIENT" ]; then
 	source .bashrc-local

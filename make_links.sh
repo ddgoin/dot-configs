@@ -8,7 +8,7 @@
 
 dir=~/dot-configs                    # dotfiles directory
 olddir=~/dot-configs-old             # old dotfiles backup directory
-files="bash_profile bashrc bashrc-local bashrc-remote screenrc tmux.conf tmux-local.conf tmux-remote.conf vimrc vim "    # list of files/folders to symlink in homedir
+files="bash_profile bashrc bashrc-local bashrc-remote screenrc tmux.conf tmux-local.conf tmux-remote.conf vimrc vim zshrc"    # list of files/folders to symlink in homedir
 
 ##########
 
