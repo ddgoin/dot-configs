@@ -1,3 +1,4 @@
+buftabs
 ctrlp.vim
 gundo.vim
 molokai
@@ -7,4 +8,3 @@ syntastic
 vim-airline
 vim-fugitive
 vim-markdown
-youcompleteme
