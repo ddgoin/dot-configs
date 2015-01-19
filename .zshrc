@@ -25,6 +25,7 @@ alias 'pandora'="aoss pianobar"
 alias 'go'="tmuxgo.sh"
 alias 'say'='echo "$1" | espeak -s 150 2>/dev/null'
 alias 'alert'='say-note.sh'
+alias 'nwycdb'='mysqlnwyc.sh'
 
 if [ -z "$SSH_CLIENT" ]; then
 	source .bashrc-local

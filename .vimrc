@@ -34,6 +34,23 @@ set mouse=a
 
 "SEARCHING!
 set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+
+"SWITCH BUFFERS WITHOUT SAVING!
+set hidden
+
+"HIGHLIGHT TRAILING WHITESPACES!
+match ErrorMsg '\s\+$'
+
+"REMOVE TRAILING WHITESPACES!
+nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+
+"UPDATE VIMRC EASY!
+nmap <Leader>s :source $MYVIMRC<CR>
+nmap <Leader>v :e $MYVIMRC<CR>
 
 if has('vim_starting')
    set nocompatible               " Be iMproved
@@ -81,10 +98,14 @@ NeoBundle 'vim-scripts/buftabs'
 
 NeoBundleCheck
 
+"set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
+set list lcs=tab:\|\ "display tab lines
 nnoremap <F5> :GundoToggle<CR>
 colorscheme molokai
 map <C-\> :NERDTreeToggle<CR>
 hi normal ctermbg=NONE
 
+let g:ctrlp_working_path_mode = 0
 noremap <F1> :bprev<CR>
 noremap <F2> :bnext<CR>
+hi CursorLine cterm=NONE ctermbg=black
