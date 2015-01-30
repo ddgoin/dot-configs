@@ -106,6 +106,7 @@ map <C-\> :NERDTreeToggle<CR>
 hi normal ctermbg=NONE
 
 let g:ctrlp_working_path_mode = 0
+let g:ctrlp_arg_map = 1 "lets you send an argument when opening multiple tabs
 noremap <F1> :bprev<CR>
 noremap <F2> :bnext<CR>
 hi CursorLine cterm=NONE ctermbg=black

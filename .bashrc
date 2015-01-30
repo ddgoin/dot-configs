@@ -7,11 +7,12 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-export DYLD_LIBRARY_PATH=/usr/local/mysql/lib 
+export DYLD_LIBRARY_PATH=/usr/local/mysql/lib
 export TERM="screen-256color"
 export set PATH=$PATH:~
 export PATH=~/scripts:$PATH
 export CVNODE=drew
+export EDITOR=vim
 
 ESC="\e["
 PCOLOR="${ESC}1;154m"
