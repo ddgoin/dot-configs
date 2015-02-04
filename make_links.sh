@@ -7,9 +7,8 @@
 ########## Variables
 
 timestamp=$(date +%F_%T)
-dirname=$(basename `pwd`)
-dir="$HOME/$dirname"                    # dotfiles directory
-olddir="$HOME/$dirname/backup/$timestamp"             # old dotfiles backup directory
+dir=$(pwd)
+olddir="$dir/backup/$timestamp"             # old dotfiles backup directory
 files=".screenrc .tmux.conf .tmux-local.conf .tmux-remote.conf .vimrc"    # list of files/folders to symlink in homedir
 
 ##########
@@ -30,5 +29,5 @@ for file in $files; do
 		mv $HOME/$file $olddir
 	fi
 	echo "   creating symlink"
-	ln -s $dir/$file $HOME/$file
+	ln -sf $dir/$file $HOME/$file
 done
