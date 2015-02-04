@@ -8,7 +8,7 @@
 
 dir="$HOME/dot-configs"                    # dotfiles directory
 olddir="$HOME/dot-configs/backup"             # old dotfiles backup directory
-files="screenrc tmux.conf tmux-local.conf tmux-remote.conf vimrc vim"    # list of files/folders to symlink in homedir
+files="screenrc tmux.conf tmux-local.conf tmux-remote.conf vimrc"    # list of files/folders to symlink in homedir
 
 ##########
 
