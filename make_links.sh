@@ -6,9 +6,9 @@
 
 ########## Variables
 
-dir=~/dot-configs                    # dotfiles directory
-olddir=~/dot-configs-old             # old dotfiles backup directory
-files="bash_profile bashrc bashrc-local bashrc-remote screenrc tmux.conf tmux-local.conf tmux-remote.conf vimrc vim zshrc"    # list of files/folders to symlink in homedir
+dir="$HOME/dot-configs"                    # dotfiles directory
+olddir="$HOME/dot-configs/backup"             # old dotfiles backup directory
+files="screenrc tmux.conf tmux-local.conf tmux-remote.conf vimrc vim"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -22,7 +22,7 @@ echo "Changing to the $dir directory"
 cd $dir
 echo "...done"
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks 
+# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
 for file in $files; do
     echo "Moving any existing dotfiles from ~ to $olddir"
     mv ~/.$file ~/dot-configs-old/

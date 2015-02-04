@@ -1,4 +1,0 @@
-export UNODE=false
-# TMUX on startup                                                                    
-#[[ $- != *i* ]] && return                                                  
-#[[ -z "$TMUX" ]] && exec tmuxgo.sh 

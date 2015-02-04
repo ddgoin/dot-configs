@@ -1,11 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =9
-let g:netrw_dirhist_1='/home/drew/Templates'
-let g:netrw_dirhist_2='/home/drew/scripts'
-let g:netrw_dirhist_3='/home/drew/Public'
-let g:netrw_dirhist_4='/home/drew/Projects'
-let g:netrw_dirhist_5='/home/drew/Pictures'
-let g:netrw_dirhist_6='/home/drew/Music'
-let g:netrw_dirhist_7='/home/drew/Dropbox'
-let g:netrw_dirhist_8='/home/drew'
-let g:netrw_dirhist_9='/home/drew/Projects/NWYC-Backend'
+let g:netrw_dirhist_cnt =0
