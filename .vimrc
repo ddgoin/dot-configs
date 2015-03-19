@@ -1,10 +1,14 @@
 " COLORS!
 syntax enable
+syntax on
 filetype indent plugin on
 sy on
 set background=dark
 set t_Co=256
 " colorscheme Tomorrow-Night-Bright
+
+set lazyredraw
+set ttyfast
 
 au Filetype python setl noet ts=4 sw=4
 " SPACES AND TABS!
@@ -83,30 +87,66 @@ if has('vim_starting')
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
-NeoBundle 'bling/vim-airline'
 
-"fonts
+"install vim packages
 NeoBundle 'tomasr/molokai'
+"NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'bling/vim-airline'
 NeoBundle 'tpope/vim-fugitive'
-"NeoBundle 'valloric/youcompleteme'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'vim-scripts/buftabs'
+"NeoBundle 'vim-scripts/buftabs'
+NeoBundle 'ervandew/supertab'
+"NeoBundle 'ap/vim-buftabline'
+"NeoBundle 'valloric/youcompleteme'
+"NeoBundle 'xolox/vim-misc'
+"NeoBundle 'xolox/vim-notes'
 
 NeoBundleCheck
 
 "set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
 set list lcs=tab:\|\ "display tab lines
 nnoremap <F5> :GundoToggle<CR>
-colorscheme molokai
 map <C-\> :NERDTreeToggle<CR>
 hi normal ctermbg=NONE
 
+" COLORSCHEMES
+"let g:airline_theme='lucius'
+let g:airline_theme='simple'
+colorscheme molokai
+"set background=dark
+"colorscheme solarized
+
+let g:notes_directories = ['~/Projects/Notes']
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_arg_map = 1 "lets you send an argument when opening multiple tabs
 noremap <F1> :bprev<CR>
 noremap <F2> :bnext<CR>
 hi CursorLine cterm=NONE ctermbg=black
+
+
+" AUTO SESSIONS!
+fu! SaveSess()
+	execute 'mksession! ' . getcwd() . '/.session.vim'
+endfunction
+
+fu! RestoreSess()
+	if filereadable(getcwd() . '/.session.vim')
+		execute 'so ' . getcwd() . '/.session.vim'
+		if bufexists(1)
+			for l in range(1, bufnr('$'))
+				if bufwinnr(l) == -1
+					exec 'sbuffer ' . l
+				endif
+			endfor
+		endif
+	endif
+endfunction
+
+autocmd VimLeave * call SaveSess()
+autocmd VimEnter * nested if !argc() | call RestoreSess() | endif
+
+set sessionoptions-=options  " Don't save options
