@@ -57,54 +57,52 @@ nmap <Leader>s :source $MYVIMRC<CR>
 nmap <Leader>v :e $MYVIMRC<CR>
 
 if has('vim_starting')
-   set nocompatible               " Be iMproved
+	set nocompatible               " Be iMproved
 
-   " Required:
-   set runtimepath+=~/.vim/bundle/neobundle.vim/
- endif
+	" Required:
+	set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 
- " Required:
- call neobundle#begin(expand('~/.vim/bundle/'))
+" Required:
+call neobundle#begin(expand('~/.vim/bundle/'))
 
- " Let NeoBundle manage NeoBundle
- " Required:
- NeoBundleFetch 'Shougo/neobundle.vim'
+" Let NeoBundle manage NeoBundle
+" Required:
+NeoBundleFetch 'Shougo/neobundle.vim'
 
- " My Bundles here:
- " Refer to |:NeoBundle-examples|.
- " Note: You don't set neobundle setting in .gvimrc!
 
- call neobundle#end()
-
- " Required:
- filetype plugin indent on
-
- " If there are uninstalled bundles found on startup,
- " this will conveniently prompt you to install them.
- " NeoBundleCheck
-
-"airline
-set laststatus=2
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-
-"install vim packages
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
 NeoBundle 'tomasr/molokai'
-"NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'scrooloose/nerdtree'
+" NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'scrooloose/syntastic'
-"NeoBundle 'vim-scripts/buftabs'
 NeoBundle 'ervandew/supertab'
+"NeoBundle 'vim-scripts/buftabs'
+"NeoBundle 'altercation/vim-colors-solarized'
 "NeoBundle 'ap/vim-buftabline'
 "NeoBundle 'valloric/youcompleteme'
 "NeoBundle 'xolox/vim-misc'
 "NeoBundle 'xolox/vim-notes'
 
+call neobundle#end()
+
+" Required:
+filetype plugin indent on
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+" NeoBundleCheck
+
+"airline
+set laststatus=2
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 NeoBundleCheck
 
 "set list listchars=tab:❘-,trail:·,extends:»,precedes:«,nbsp:×
