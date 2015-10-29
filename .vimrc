@@ -42,6 +42,7 @@ set clipboard=unnamedplus
 
 " SPACES AND TABS!
 au Filetype python setl noet ts=4 sw=4 "Python is picky
+au Filetype html set filetype=htmldjango "Vim is picky with new files
 set tabstop=4
 set autoindent
 set softtabstop=0
@@ -68,7 +69,13 @@ set ttyfast
 
 
 " MOUSE CONTROL!
-set mouse=a
+set mouse+=a
+" make mouse controls when using putty=>tmux=>vim
+if &term =~ '^screen'
+	" tmux knows the extended mouse mode
+	set ttymouse=xterm2
+endif
+
 
 
 " TAB/INDENT LINES
