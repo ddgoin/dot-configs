@@ -17,6 +17,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'ervandew/supertab'
 NeoBundle 'qpkorr/vim-bufkill'
 NeoBundle 'ddgoin/autosession'
+NeoBundle 'gorodinskiy/vim-coloresque.git'
 
 call neobundle#end()
 filetype plugin indent on
@@ -77,14 +78,19 @@ if &term =~ '^screen'
 endif
 
 
-
 " TAB/INDENT LINES
 set list lcs=tab:\|\ "display tab lines
 hi SpecialKey gui=NONE
 
 
 " HIGHLIGHT TRAILING WHITESPACES!
-match ErrorMsg '\s\+$'
+"match ErrorMsg '\s\+$'
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+au BufWinEnter * match ExtraWhitespace /\s\+$/
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
+au BufWinLeave * call clearmatches()
 
 
 " SEARCHING!
@@ -104,6 +110,15 @@ noremap <Leader>w :BD<CR>
 
 " REMOVE TRAILING WHITESPACES!
 nnoremap <Leader>rtw :%s/\s\+$//e<CR>
+
+
+" KEYBOARD SCROLLING!
+set scrolloff=5
+
+
+" FOLDING!
+set nofoldenable "disable folding
+let g:vim_markdown_folding_disabled=1
 
 
 " UPDATE VIMRC EASY!
