@@ -45,7 +45,7 @@ set clipboard=unnamedplus
 
 
 " SPACES AND TABS!
-au Filetype python setl expandtab ts=4 sw=4 "Python is picky
+au Filetype python setl expandtab ts=4 sw=4 sts=4 "Python is picky
 au Filetype html set filetype=htmldjango "Vim is picky with new files
 au Filetype typescript set expandtab ts=2 sw=2
 set tabstop=4
