@@ -35,7 +35,8 @@ filetype indent plugin on
 sy on
 set background=dark
 set t_Co=256
-colorscheme molokai
+" colorscheme molokai
+colorscheme default
 let g:airline_theme='simple'
 hi CursorLine cterm=NONE ctermbg=black
 
@@ -147,16 +148,16 @@ nmap <Leader>v :e $MYVIMRC<CR>
 
 
 " CURSOR SHAPE! (gnome-terminal only)
-au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
-au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-au VimEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+"au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+"au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+"au VimEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+"au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
 
 
 " VIM AIRLINE!
 set laststatus=2
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 
 
 " CTRLP!
