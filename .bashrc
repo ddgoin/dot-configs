@@ -111,7 +111,9 @@ SCOLOR="${ESC}1;154m"
 MCOLOR=""
 
 # sources
-source /etc/bash_completion.d/git-prompt
+if [ -f /etc/bash_completion.d/git-prompt ]; then
+	source /etc/bash_completion.d/git-prompt
+fi
 
 # Set $UNODE to true if user is local or false if user is remote 
 if [ -z "$UNODE" ]; then
